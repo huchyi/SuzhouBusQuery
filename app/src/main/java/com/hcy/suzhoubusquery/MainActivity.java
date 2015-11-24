@@ -61,8 +61,8 @@ public class MainActivity extends Activity{
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 
         //控制字体
-        //webSettings.setTextSize(WebSettings.TextSize.NORMAL);
-        webSettings.setTextZoom(32);
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        //webSettings.setTextZoom(32);
 
         // Access-Control-Allow-Origin Error At Android 4.1
         if (Build.VERSION.SDK_INT >= 16) {
