@@ -18,8 +18,11 @@ import android.widget.ScrollView;
 
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import org.htmlparser.Node;
@@ -30,7 +33,24 @@ import org.htmlparser.util.SimpleNodeIterator;
 
 import java.io.IOException;
 
-
+/**
+ * 通过线路时时查询
+ * （1）线路号
+ * "http://content.2500city.com/Json?method=SearchBusLine&appVersion=3.6&deviceID=866523018841548&lineName=108"
+ *（2）线路方向
+ *http://content.2500city.com/Json?method=GetBusLineDetail&appVersion=3.6&deviceID=866523018841548&Guid=0596b2fe-84f3-46a1-a410-59243bd71080
+ *
+ *
+ *站点查询
+ * （1）模糊名
+ * http://content.2500city.com/Json?method=SearchBusStation&appVersion=3.6&deviceID=866523018841548&standName=%E8%8B%8F%E5%A4%A7%E5%8C%97
+ *（1）详细名
+ * http://content.2500city.com/Json?method=GetBusStationDetail&appVersion=3.6&deviceID=866523018841548&NoteGuid=AUE
+ *
+ *
+ *
+ *
+ * **/
 public class MainActivity extends Activity {
     protected WebView webView;
     private ProgressBar progressBar;
@@ -52,7 +72,7 @@ public class MainActivity extends Activity {
         OkHttpClient mOkHttpClient = new OkHttpClient();
 //创建一个Request
         final Request request = new Request.Builder()
-                .url("http://www.szjt.gov.cn/apts/APTSLine.aspx")
+                .url("http://content.2500city.com/Json?method=SearchBusLine&appVersion=3.6&deviceID=866523018841548&lineName=108")
                 .build();
 //new call
         Call call = mOkHttpClient.newCall(request);
@@ -70,6 +90,44 @@ public class MainActivity extends Activity {
             }
         });
     }
+
+
+
+    private final OkHttpClient client = new OkHttpClient();
+    private static final MediaType MEDIA_TYPE_MARKDOWN
+            = MediaType.parse("text/html; charset=utf-8");
+
+    public void run() throws Exception {
+//        RequestBody formBody = new FormEncodingBuilder()
+//                .add("appVersion", "3.6")
+//                .add("deviceID", "866523018841548")
+//                .add("Guid", "0596b2fe-84f3-46a1-a410-59243bd71080")
+//                .add("method", "GetBusLineDetail")
+//                .build();
+//
+//        Request request = new Request.Builder()
+//                .url("http://content.2500city.com/Json?method=SearchBusLine&appVersion=3.6&deviceID=866523018841548&lineName=108 ")
+//                .post(formBody)
+//                .build();
+
+        String postBody = "";
+
+        Request request = new Request.Builder()
+                .url("http://content.2500city.com/Json?method=SearchBusLine&appVersion=3.6&deviceID=866523018841548&lineName=108")
+                .post(RequestBody.create(MEDIA_TYPE_MARKDOWN, postBody))
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful())throw new IOException("Unexpected code " + response);
+
+        Log.i("hcy","response:"+response.body().string());
+        System.out.println(response.body().string());
+    }
+
+
+
+
+
 
 
     // 循环访问所有节点，输出包含关键字的值节点
