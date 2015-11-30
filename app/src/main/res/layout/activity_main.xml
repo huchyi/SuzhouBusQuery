@@ -1,23 +1,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffffff"
     tools:context=".MainActivity">
 
-    <WebView
-        android:id="@+id/web_about_us"
+    <RelativeLayout
+        android:id="@+id/layout_tabs_rl"
+        android:layout_width="match_parent"
+        android:layout_height="48dip">
+
+        <com.hcy.suzhoubusquery.utils.PagerSlidingTabStrip
+            android:id="@+id/layout_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:textColor="@drawable/pagertab_text_color_selector"
+            android:textSize="14sp"
+            app:pstsDividerColor="#00000000"
+            app:pstsIndicatorColor="#FF30CAD2"
+            app:pstsIndicatorHeight="2dp"
+            app:pstsNeedRedPoint="true"
+            app:pstsShouldExpand="true"
+            app:pstsTabPaddingLeftRight="14dip"
+            app:pstsUnderlineColor="#FFD2D2D2"
+            app:pstsUnderlineHeight="0.4dp" />
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/layout_pagers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:scrollbarSize="0dp"
-        android:scrollbarStyle="outsideOverlay" />
+        android:layout_below="@+id/layout_tabs_rl"
+        android:background="#ffffff" />
+
 
     <ProgressBar
         android:id="@+id/web_base_progress"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="fill_parent"
         android:layout_height="3dp"
-        android:minHeight="3dp"/>
+        android:minHeight="3dp"
+        android:visibility="gone" />
 
 </RelativeLayout>
