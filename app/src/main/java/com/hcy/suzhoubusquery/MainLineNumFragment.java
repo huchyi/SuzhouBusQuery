@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.hcy.suzhoubusquery.Adapter.LineNumBaseAdapter;
 import com.hcy.suzhoubusquery.net.HttpRequest;
@@ -66,6 +65,15 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
         mListView = (ListView) view.findViewById(R.id.listview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progress);
         LineNumLV = (ListView) view.findViewById(R.id.listview_line);
+
+        initData();
+    }
+
+    private void initData(){
+        if(InputTools.KeyBoard(mInputET)){
+            InputTools.HideKeyboard(mInputET);
+        }
+
     }
 
 
@@ -76,7 +84,7 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
             if (!StringUtils.isNullOrNullStr(inputStr)) {
                 getData(inputStr);
             } else {
-                Toast.makeText(getActivity(), "请输入线路号", Toast.LENGTH_LONG).show();
+                MyApplication.getInstances().showToast("请输入线路号");
             }
         }else if(v.getId() == R.id.delete_fav){
             //删除
@@ -89,7 +97,7 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
             InputTools.HideKeyboard(mInputET);
         }
         if (!NetworkUtils.isConnected(getActivity())) {
-            Toast.makeText(getActivity(), "请检查网络连接", Toast.LENGTH_LONG).show();
+            MyApplication.getInstances().showToast("请检查网络连接");
             return;
         }
         mProgressBar.setVisibility(View.VISIBLE);
@@ -111,12 +119,20 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         BaseBean bean = (BaseBean) parent.getAdapter().getItem(position);
-                                        Toast.makeText(getActivity(), bean.getStr("Guid"), Toast.LENGTH_LONG).show();
+                                        String guidStr = bean.getStr("Guid");
+                                        if(!StringUtils.isNullOrNullStr(guidStr)){
+                                            LineDirectionActivity.startActivity(getActivity(),guidStr);
+                                        }else{
+                                            MyApplication.getInstances().showToast("该线路编号为空");
+                                        }
+
                                     }
                                 });
+                            }else{
+                                MyApplication.getInstances().showToast("没有该线路信息");
                             }
                         }catch (Exception e){
-                            Toast.makeText(getActivity(), "解析失败", Toast.LENGTH_LONG).show();
+                            MyApplication.getInstances().showToast("解析失败");
                             e.printStackTrace();
                         }
 
@@ -132,9 +148,9 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
                     public void run() {
                         mProgressBar.setVisibility(View.GONE);
                         if (StringUtils.isNullOrNullStr(msg)) {
-                            Toast.makeText(getActivity(), "请求错误", Toast.LENGTH_LONG).show();
+                            MyApplication.getInstances().showToast("请求错误");
                         } else {
-                            Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
+                            MyApplication.getInstances().showToast(msg);
                         }
                     }
                 });

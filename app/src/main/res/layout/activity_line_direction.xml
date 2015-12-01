@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#d2d2d2"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#ffffff"
+        android:drawableLeft="@drawable/common_back"
+        android:gravity="center_vertical"
+        android:text="返回"
+        android:textColor="#000000"
+        android:textSize="16dp" />
+
+
+    <TextView
+        android:id="@+id/car_line_num"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        android:text="108"
+        android:textColor="#000000"
+        android:textSize="18dp" />
+
+
+    <LinearLayout
+        android:id="@+id/car_line_to_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_bar"
+        android:layout_marginTop="1dp"
+        android:background="#ffffff"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="开往:"
+            android:textColor="#aaaaaa"
+            android:layout_marginRight="10dp"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/car_line_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="#438bf3"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/car_line_refresh"
+        android:layout_width="45dp"
+        android:layout_height="35dp"
+        android:paddingRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/title_bar"
+        android:layout_marginTop="1dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/refresh" />
+
+    <ListView
+        android:id="@+id/listview"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/car_line_to_ll"
+        android:layout_marginTop="1dp"
+        android:background="#ffffff"
+        android:divider="#00000000"
+        android:scrollbars="none" />
+
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -20,7 +20,7 @@
             android:id="@+id/input"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_centerVertical="true"
+            android:background="@drawable/bg_edittext"
             android:gravity="center_vertical"
             android:hint="请输入线路号"
             android:paddingLeft="8dp"
@@ -28,21 +28,17 @@
             android:textColorHint="#aaaaaa"
             android:textSize="18dp" />
 
-        <LinearLayout
+        <Button
             android:id="@+id/to_search"
-            android:layout_width="50dp"
-            android:layout_height="45dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/input"
+            android:background="@drawable/bg_btn"
             android:gravity="center"
-            android:paddingRight="12dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bus_search" />
-        </LinearLayout>
+            android:text="搜索"
+            android:textColor="#40000000"
+            android:textSize="16dp" />
 
     </RelativeLayout>
 
@@ -99,7 +95,7 @@
         android:layout_below="@+id/input_ll"
         android:background="#ffffff"
         android:scrollbars="none"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 
     <ProgressBar
