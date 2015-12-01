@@ -2,6 +2,7 @@ package com.hcy.suzhoubusquery;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,11 @@ import com.hcy.suzhoubusquery.Adapter.LineNumBaseAdapter;
 import com.hcy.suzhoubusquery.net.HttpRequest;
 import com.hcy.suzhoubusquery.utils.BaseBean;
 import com.hcy.suzhoubusquery.utils.InputTools;
+import com.hcy.suzhoubusquery.utils.LineNumInfoPreferenceUtil;
 import com.hcy.suzhoubusquery.utils.NetworkUtils;
 import com.hcy.suzhoubusquery.utils.StringUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -70,10 +73,7 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
     }
 
     private void initData(){
-        if(InputTools.KeyBoard(mInputET)){
-            InputTools.HideKeyboard(mInputET);
-        }
-
+        mInputET.clearFocus();
     }
 
 
@@ -88,7 +88,6 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
             }
         }else if(v.getId() == R.id.delete_fav){
             //删除
-
         }
     }
 
@@ -120,6 +119,8 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         BaseBean bean = (BaseBean) parent.getAdapter().getItem(position);
                                         String guidStr = bean.getStr("Guid");
+                                        String resetJson = "{\"LName\":\"" + bean.getStr("LName")+ "\",\"LDirection\":\"" +bean.getStr("LDirection") + "\",\"Guid\":\"" + bean.getStr("Guid")+ "\"}";
+                                        collectReset(resetJson,guidStr);
                                         if(!StringUtils.isNullOrNullStr(guidStr)){
                                             LineDirectionActivity.startActivity(getActivity(),guidStr);
                                         }else{
@@ -157,5 +158,44 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
             }
         });
     }
+
+
+
+
+    /**
+     * json重组
+     *
+     * */
+    private void collectReset(String json,String Guid){
+        String lineJson = LineNumInfoPreferenceUtil.getValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_NUM_JSON,"");
+        if(!StringUtils.isNullOrNullStr(lineJson)){
+            try {
+                BaseBean bean = new BaseBean(new JSONObject(lineJson));
+                ArrayList<BaseBean> beans = (ArrayList<BaseBean>) bean.get("list");
+                boolean ishave = false;
+                String str;
+                if(beans != null ){
+                    for (int i = 0; i < beans.size(); i++) {
+                        str = beans.get(i).getStr("Guid");
+                        if(Guid.equals(str)){
+                            ishave = true;
+                            break;
+                        }
+                    }
+                    if(!ishave){
+                        lineJson = lineJson.replace("]}","");
+                        lineJson = lineJson + "," + json + "]}";
+                        LineNumInfoPreferenceUtil.setValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_NUM_JSON,lineJson);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else{
+            json = "{\"list\":[" +json + "]}";
+            LineNumInfoPreferenceUtil.setValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_NUM_JSON,json);
+        }
+    }
+
 
 }

@@ -32,8 +32,8 @@
 
         <ImageView
             android:id="@+id/line_station"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_marginTop="10dp"
             android:contentDescription="@null"
             android:scaleType="fitXY"
@@ -42,8 +42,8 @@
 
         <ImageView
             android:id="@+id/line_start"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="-2dp"
@@ -53,8 +53,8 @@
 
         <ImageView
             android:id="@+id/line_end"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="-2dp"

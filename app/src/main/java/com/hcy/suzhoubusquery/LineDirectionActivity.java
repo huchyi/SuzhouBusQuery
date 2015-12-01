@@ -35,6 +35,8 @@ public class LineDirectionActivity extends Activity implements View.OnClickListe
 
     private ProgressBar mProgressBar;
 
+    private ArrayList<BaseBean> mBeans = new ArrayList<>();
+
     public static void startActivity(Context context, String id) {
         Intent intent = new Intent(context, LineDirectionActivity.class);
         intent.putExtra("id", id);
@@ -97,13 +99,18 @@ public class LineDirectionActivity extends Activity implements View.OnClickListe
                                     lineNumTV.setText(bean1.getStr("LName"));
                                     toWhereTV.setText(bean1.getStr("LDirection"));
                                     ArrayList<BaseBean> beas = (ArrayList<BaseBean>) bean1.get("StandInfo");
-
-                                    if (mLineDirectionBaseAdapter == null) {
-                                        mLineDirectionBaseAdapter = new LineDirectionBaseAdapter(LineDirectionActivity.this, beas);
-                                        mListView.setAdapter(mLineDirectionBaseAdapter);
-                                    } else {
-                                        mLineDirectionBaseAdapter.refreshData(beas);
-                                        MyApplication.getInstances().showToast("刷新成功");
+                                    if(beas != null){
+                                        if (mLineDirectionBaseAdapter == null) {
+                                            mBeans = beas;
+                                            mLineDirectionBaseAdapter = new LineDirectionBaseAdapter(LineDirectionActivity.this, mBeans);
+                                            mListView.setAdapter(mLineDirectionBaseAdapter);
+                                        } else {
+                                            //mLineDirectionBaseAdapter.refreshData(beas);
+                                            mBeans.clear();
+                                            mBeans.addAll(beas);
+                                            mLineDirectionBaseAdapter.notifyDataSetChanged();
+                                            MyApplication.getInstances().showToast("刷新成功");
+                                        }
                                     }
                                 }
                             }

@@ -32,12 +32,12 @@
             android:id="@+id/to_search"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="15dp"
             android:layout_below="@+id/input"
+            android:layout_marginTop="15dp"
             android:background="@drawable/bg_btn"
             android:gravity="center"
             android:text="搜索"
-            android:textColor="#40000000"
+            android:textColor="#ffffff"
             android:textSize="16dp" />
 
     </RelativeLayout>
@@ -94,6 +94,8 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/input_ll"
         android:background="#ffffff"
+        android:divider="#d2d2d2"
+        android:dividerHeight="0.8px"
         android:scrollbars="none"
         android:visibility="gone" />
 
