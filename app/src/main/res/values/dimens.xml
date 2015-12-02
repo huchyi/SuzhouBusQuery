@@ -4,4 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="toast_margin_buttom">100dp</dimen>
+
+    <!-- 自定义对话框圆角-->
+    <dimen name="my_alert_dialog_radius">8dp</dimen>
 </resources>

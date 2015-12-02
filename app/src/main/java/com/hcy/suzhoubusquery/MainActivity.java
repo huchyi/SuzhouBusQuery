@@ -1,14 +1,18 @@
 package com.hcy.suzhoubusquery;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 
 import com.hcy.suzhoubusquery.utils.MethodUtils;
 import com.hcy.suzhoubusquery.utils.PagerSlidingTabStrip;
+import com.hcy.suzhoubusquery.view.CustomDialog;
 
 public class MainActivity extends FragmentActivity {
 
@@ -81,5 +85,31 @@ public class MainActivity extends FragmentActivity {
         public int getCount() {
             return 2;
         }
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if (keyCode == KeyEvent.KEYCODE_BACK ){
+            CustomDialog.Builder builder = new CustomDialog.Builder(this);
+            builder.setTitle("提示");
+            builder.setMessage("确定退出吗?");
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    System.exit(0);
+                    finish();
+                }
+            });
+            builder.setNegativeButton("取消",
+                    new android.content.DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+            builder.create().show();
+        }
+        return false;
     }
 }
