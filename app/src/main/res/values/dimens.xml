@@ -7,4 +7,7 @@
 
     <!-- 自定义对话框圆角-->
     <dimen name="my_alert_dialog_radius">8dp</dimen>
+
+    <dimen name="station_detail_item_text_s">5sp</dimen>
+    <dimen name="station_detail_item_text_b">7sp</dimen>
 </resources>

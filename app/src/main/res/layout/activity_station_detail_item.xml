@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/station_car_line"
+        android:layout_width="60dp"
+        android:layout_height="30sp"
+        android:gravity="center_vertical"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:textColor="#438bf3"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/station_car_about_already"
+        android:layout_width="match_parent"
+        android:layout_height="30sp"
+        android:layout_toRightOf="@+id/station_car_line"
+        android:gravity="center_vertical"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:textColor="#438bf3"
+        android:textSize="14dp" />
+
+
+    <TextView
+        android:id="@+id/station_car_distince"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:textColor="#438bf3"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/station_car_direction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/station_car_line"
+        android:gravity="center_vertical"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:textColor="#aaaaaa"
+        android:textSize="14dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/station_car_direction"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+        <TextView
+            android:id="@+id/station_car_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingRight="5dp"
+            android:textColor="#aaaaaa"
+            android:textSize="14dp" />
+        <TextView
+            android:id="@+id/station_car_now"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:textColor="#aaaaaa"
+            android:textSize="14dp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

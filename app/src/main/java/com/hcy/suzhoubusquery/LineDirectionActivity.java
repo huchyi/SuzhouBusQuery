@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -104,6 +106,15 @@ public class LineDirectionActivity extends Activity implements View.OnClickListe
                                             mBeans = beas;
                                             mLineDirectionBaseAdapter = new LineDirectionBaseAdapter(LineDirectionActivity.this, mBeans);
                                             mListView.setAdapter(mLineDirectionBaseAdapter);
+                                            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                                @Override
+                                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                    BaseBean bean = (BaseBean) parent.getAdapter().getItem(position);
+                                                    if(bean != null){
+                                                        StationDetailActivity.startActivity(LineDirectionActivity.this,bean.getStr("SName"),bean.getStr("SCode"));
+                                                    }
+                                                }
+                                            });
                                         } else {
                                             //mLineDirectionBaseAdapter.refreshData(beas);
                                             mBeans.clear();
