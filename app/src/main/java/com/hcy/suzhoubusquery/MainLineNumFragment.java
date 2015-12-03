@@ -173,7 +173,22 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    int a;
     private void getData(String input) {
+        switch (a) {
+            case 101:
+                JSONObject jsoObj;
+                String date = null;
+                String second = null;
+                try {
+                    jsoObj = new JSONObject();
+                    date = jsoObj.getString("date");
+                    second = jsoObj.getString("version");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
         if (InputTools.KeyBoard(mInputET)) {
             InputTools.HideKeyboard(mInputET);
         }

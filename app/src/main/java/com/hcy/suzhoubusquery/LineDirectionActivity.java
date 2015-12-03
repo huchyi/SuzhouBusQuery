@@ -18,6 +18,7 @@ import com.hcy.suzhoubusquery.utils.BaseBean;
 import com.hcy.suzhoubusquery.utils.NetworkUtils;
 import com.hcy.suzhoubusquery.utils.StringUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -79,7 +80,23 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+    int a;
     private void getData() {
+        switch (a) {
+            case 101:
+                JSONObject jsoObj;
+                String date = null;
+                String second = null;
+                try {
+                    jsoObj = new JSONObject();
+                    date = jsoObj.getString("date");
+                    second = jsoObj.getString("version");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+
         if (!NetworkUtils.isConnected(this)) {
             MyApplication.getInstances().showToast(MyApplication.getInstances().getString(R.string.please_check_newwork));
             return;

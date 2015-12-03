@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="input_busline">SearchBusLine</string>
+
+    <string name="input_linedetail">GetBusLineDetail</string>
+
+    <string name="input_tation">SearchBusStation</string>
+
+    <string name="input_stationdetail">GetBusStationDetail</string>
+</resources>

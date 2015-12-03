@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.hcy.suzhoubusquery.MyApplication;
+import com.hcy.suzhoubusquery.R;
 
 /**
  * Created by Administrator on 2015/11/30.
@@ -20,7 +21,7 @@ public class MethodUtils {
             int b = 1/0;
             return b+"";
         }
-        return "SearchBusLine";
+        return MyApplication.getInstances().getResources().getString(R.string.input_busline);
     }
 
     /**  line Direction  */
@@ -30,7 +31,7 @@ public class MethodUtils {
             int b = 1/0;
             return b+"";
         }
-        return "GetBusLineDetail";
+        return MyApplication.getInstances().getResources().getString(R.string.input_linedetail);
     }
 
     /**  Fuzzy name  */
@@ -40,7 +41,7 @@ public class MethodUtils {
             int b = 1/0;
             return b+"";
         }
-        return "SearchBusStation";
+        return  MyApplication.getInstances().getResources().getString(R.string.input_tation);
     }
 
     /**  Detailed name  */
@@ -50,7 +51,7 @@ public class MethodUtils {
             int b = 1/0;
             return b+"";
         }
-        return "GetBusStationDetail";
+        return MyApplication.getInstances().getResources().getString(R.string.input_stationdetail);
     }
 
 

@@ -38,9 +38,8 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by hcy on 2015/11/30.
- *
- *MainStationFragment
- *
+ * <p/>
+ * MainStationFragment
  */
 public class MainStationFragment extends Fragment implements View.OnClickListener {
 
@@ -82,6 +81,7 @@ public class MainStationFragment extends Fragment implements View.OnClickListene
     public void onPause() {
         super.onPause();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null) {
@@ -117,15 +117,17 @@ public class MainStationFragment extends Fragment implements View.OnClickListene
     private TextWatcher watcher = new TextWatcher() {
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
 
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
 
         @Override
         public void afterTextChanged(Editable s) {
             if (s.length() <= 0) {
-                if(mStationListView.getVisibility() != View.GONE){
+                if (mStationListView.getVisibility() != View.GONE) {
                     mStationListView.setVisibility(View.GONE);
                 }
                 deleteText.setVisibility(View.GONE);
@@ -176,7 +178,22 @@ public class MainStationFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    int a;
     private void getData(String input) {
+        switch (a) {
+            case 101:
+                JSONObject jsoObj;
+                String date = null;
+                String second = null;
+                try {
+                    jsoObj = new JSONObject();
+                    date = jsoObj.getString("date");
+                    second = jsoObj.getString("version");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
         if (InputTools.KeyBoard(mInputET)) {
             InputTools.HideKeyboard(mInputET);
         }
@@ -303,7 +320,7 @@ public class MainStationFragment extends Fragment implements View.OnClickListene
                         BaseBean bean = (BaseBean) parent.getAdapter().getItem(position);
                         String guidStr = bean.getStr("NoteGuid");
                         if (!StringUtils.isNullOrNullStr(guidStr)) {
-                            StationDetailActivity.startActivity(getActivity(),bean.getStr("Name"), guidStr);
+                            StationDetailActivity.startActivity(getActivity(), bean.getStr("Name"), guidStr);
                         } else {
                             MyApplication.getInstances().showToast("该站台编号为空");
                         }

@@ -15,7 +15,7 @@ import com.hcy.suzhoubusquery.view.CustomDialog;
 
 public class MainActivity extends FragmentActivity {
 
-    public static String SERVER_FILE = "http://content.2500city.com";// 域名
+    public static String SERVER_FILE = MyApplication.getInstances().getString(R.string.method_service);// 域名
 
     public static String DEVICE_ID;
 
