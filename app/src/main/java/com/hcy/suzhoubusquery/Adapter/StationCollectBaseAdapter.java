@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hcy.suzhoubusquery.MyApplication;
@@ -70,7 +71,7 @@ public class StationCollectBaseAdapter extends BaseAdapter {
             holder.stationArea = (TextView) convertView.findViewById(R.id.station_area);
             holder.stationStreet = (TextView) convertView.findViewById(R.id.station_street);
             holder.stationPosition = (TextView) convertView.findViewById(R.id.station_position);
-            holder.delete = (ImageView) convertView.findViewById(R.id.delete);
+            holder.delete = (LinearLayout) convertView.findViewById(R.id.delete);
             convertView.setTag(holder);
         } else {
             holder = (Holder) convertView.getTag();
@@ -156,6 +157,6 @@ public class StationCollectBaseAdapter extends BaseAdapter {
         TextView stationArea;
         TextView stationStreet;
         TextView stationPosition;
-        ImageView delete;
+        LinearLayout delete;
     }
 }

@@ -36,13 +36,17 @@
 
     </LinearLayout>
 
-    <ImageView
+    <LinearLayout
         android:id="@+id/delete"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/line_history_clean"/>
+        android:gravity="center"
+        android:layout_centerVertical="true">
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/line_history_clean"/>
+    </LinearLayout>
 
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hcy.suzhoubusquery.MyApplication;
@@ -67,7 +68,7 @@ public class CollectBaseAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.fragment_line_num_collect_layout_item, null);
             holder.lineNum = (TextView) convertView.findViewById(R.id.line_num);
             holder.linNumToWhere = (TextView) convertView.findViewById(R.id.to_where);
-            holder.delete = (ImageView) convertView.findViewById(R.id.delete);
+            holder.delete = (LinearLayout) convertView.findViewById(R.id.delete);
             convertView.setTag(holder);
         } else {
             holder = (Holder) convertView.getTag();
@@ -128,6 +129,6 @@ public class CollectBaseAdapter extends BaseAdapter {
     private class Holder {
         TextView lineNum;
         TextView linNumToWhere;
-        ImageView delete;
+        LinearLayout delete;
     }
 }

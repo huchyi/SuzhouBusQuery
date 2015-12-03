@@ -50,7 +50,7 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="60.0dip"
+            android:layout_height="40.0dip"
             android:layout_gravity="bottom"
             android:background="@color/white"
             android:gravity="center"
@@ -60,7 +60,7 @@
                 android:id="@+id/positiveButton"
                 style="@style/text_15_666666_sdw"
                 android:layout_width="0dp"
-                android:layout_height="60.0dip"
+                android:layout_height="40.0dip"
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:gravity="center"
@@ -75,7 +75,7 @@
                 android:id="@+id/negativeButton"
                 style="@style/text_15_666666_sdw"
                 android:layout_width="0dp"
-                android:layout_height="60.0dip"
+                android:layout_height="40.0dip"
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:gravity="center"
