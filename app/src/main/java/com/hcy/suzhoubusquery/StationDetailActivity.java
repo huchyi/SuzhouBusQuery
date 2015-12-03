@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * <p/>
  * StationDetailActivity
  */
-public class StationDetailActivity extends Activity implements View.OnClickListener {
+public class StationDetailActivity extends BaseActivity implements View.OnClickListener {
 
     private String mNoteGuid;
     private String mName;
@@ -41,6 +41,7 @@ public class StationDetailActivity extends Activity implements View.OnClickListe
     private StationDetailBaseAdapter mStationDetailBaseAdapter;
 
     public static void startActivity(Context context, String name, String id) {
+        MyApplication.getInstances().checkActivity((Activity) context);
         Intent intent = new Intent(context, StationDetailActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("id", id);

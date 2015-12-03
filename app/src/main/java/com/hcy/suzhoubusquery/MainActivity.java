@@ -1,6 +1,5 @@
 package com.hcy.suzhoubusquery;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -97,6 +96,7 @@ public class MainActivity extends FragmentActivity {
             builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
+                    MyApplication.getInstances().exit();
                     System.exit(0);
                     finish();
                 }

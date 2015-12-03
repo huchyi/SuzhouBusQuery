@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * <p/>
  * LineDirectionActivity
  */
-public class LineDirectionActivity extends Activity implements View.OnClickListener {
+public class LineDirectionActivity extends BaseActivity implements View.OnClickListener {
 
     private ListView mListView;
     private LineDirectionBaseAdapter mLineDirectionBaseAdapter;
@@ -41,6 +41,7 @@ public class LineDirectionActivity extends Activity implements View.OnClickListe
     private ArrayList<BaseBean> mBeans = new ArrayList<>();
 
     public static void startActivity(Context context, String id) {
+        MyApplication.getInstances().checkActivity((Activity) context);
         Intent intent = new Intent(context, LineDirectionActivity.class);
         intent.putExtra("id", id);
         context.startActivity(intent);
