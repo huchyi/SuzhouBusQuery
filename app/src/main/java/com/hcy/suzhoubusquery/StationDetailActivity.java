@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -100,6 +101,15 @@ public class StationDetailActivity extends Activity implements View.OnClickListe
                                         mBeans = beans;
                                         mStationDetailBaseAdapter = new StationDetailBaseAdapter(StationDetailActivity.this, mBeans);
                                         mListView.setAdapter(mStationDetailBaseAdapter);
+                                        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                BaseBean bean = (BaseBean) parent.getAdapter().getItem(position);
+                                                if (bean != null) {
+                                                    LineDirectionActivity.startActivity(StationDetailActivity.this,bean.getStr("Guid"));
+                                                }
+                                            }
+                                        });
                                     } else {
                                         mBeans.clear();
                                         mBeans.addAll(beans);
