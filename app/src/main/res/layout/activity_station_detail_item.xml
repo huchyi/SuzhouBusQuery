@@ -46,6 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/station_car_line"
         android:gravity="center_vertical"
+        android:layout_marginRight="60dp"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
         android:textColor="#aaaaaa"
