@@ -82,6 +82,7 @@
                 android:id="@+id/delete_fav"
                 android:layout_width="60dp"
                 android:layout_height="50dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/card_close" />
         </LinearLayout>
 
