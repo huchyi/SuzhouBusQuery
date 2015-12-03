@@ -9,6 +9,7 @@
     <RelativeLayout
         android:id="@+id/layout_tabs_rl"
         android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
         android:layout_height="48dip">
 
         <com.hcy.suzhoubusquery.utils.PagerSlidingTabStrip
@@ -18,7 +19,7 @@
             android:background="#fff"
             android:textColor="@drawable/pagertab_text_color_selector"
             android:textSize="14sp"
-            app:pstsDividerColor="#00000000"
+            app:pstsDividerColor="#FFD2D2D2"
             app:pstsIndicatorColor="#FF30CAD2"
             app:pstsIndicatorHeight="2dp"
             app:pstsNeedRedPoint="true"
@@ -32,7 +33,7 @@
         android:id="@+id/layout_pagers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layout_tabs_rl"
+        android:layout_above="@+id/layout_tabs_rl"
         android:background="#ffffff" />
 
 
