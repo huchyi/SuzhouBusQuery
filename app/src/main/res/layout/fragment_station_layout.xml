@@ -2,6 +2,128 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="#efefef"
+    android:orientation="vertical"
+    android:paddingEnd="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingStart="10dp"
+    android:paddingTop="30dp">
+
+    <RelativeLayout
+        android:id="@+id/input_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_edittext"
+            android:gravity="center_vertical"
+            android:hint="请输入站台名"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textColorHint="#aaaaaa"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:id="@+id/delete_text"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="gone"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/search_input_clean" />
+
+        <Button
+            android:id="@+id/to_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/input"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bg_btn"
+            android:gravity="center"
+            android:text="搜索"
+            android:textColor="#ffffff"
+            android:textSize="16dp" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input_ll"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:paddingEnd="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingStart="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="历史记录"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:id="@+id/delete_fav"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:background="@drawable/card_close" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="#d2d2d2" />
+
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:divider="#d2d2d2"
+            android:dividerHeight="0.8px"
+            android:scrollbars="none" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input_ll"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="-48dp"
+        android:background="@drawable/fragment_line_num_bg"
+        android:orientation="vertical">
+        <ListView
+            android:id="@+id/listview_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="#d2d2d2"
+            android:dividerHeight="0.8px"
+            android:scrollbars="none"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
 </RelativeLayout>

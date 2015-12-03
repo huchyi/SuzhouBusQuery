@@ -10,8 +10,8 @@
         android:id="@+id/line_num"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:textColor="#000000"/>
+        android:textSize="18dp"
+        android:textColor="@color/font_blue_text"/>
 
     <LinearLayout
         android:layout_marginTop="3dp"
@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14dp"
-            android:textColor="#000000"
+            android:textColor="@color/font_main_aaaaaa"
             android:layout_marginRight="10dp"
             android:text="开往:"/>
 
@@ -30,8 +30,8 @@
             android:id="@+id/to_where"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:textColor="#438bf3"/>
+            android:textSize="14dp"
+            android:textColor="@color/font_blue_text"/>
 
     </LinearLayout>
 

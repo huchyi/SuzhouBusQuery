@@ -17,6 +17,11 @@
     <!-- 主要用的暖黑色 -->
     <color name="font_main">#5a6060</color>
 
+    <color name="font_main_aaaaaa">#aaaaaa</color>
+
+    <!-- 主要用的暖蓝色 -->
+    <color name="font_blue_text">#438bf3</color>
+
     <!-- List Item 颜色 -->
     <color name="main_mine_item_sel">#15000000</color>
     <color name="list_driver">#e5e5e5</color>

@@ -19,6 +19,7 @@ public class LineNumInfoPreferenceUtil {
     // LineNum
     public static final class LineNumKey {
         public static final String LINE_NUM_JSON = "line_num_json";
+        public static final String LINE_STATION_JSON = "line_station_json";
         public static final String LINE_NUM = "line_num";
         public static final String LINE_DRICTION = "line_driction";
         public static final String LINE_GUID = "line_guid";

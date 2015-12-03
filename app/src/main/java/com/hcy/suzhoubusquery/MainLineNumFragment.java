@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import com.hcy.suzhoubusquery.Adapter.CollectBaseAdapter;
 import com.hcy.suzhoubusquery.Adapter.LineNumBaseAdapter;
 import com.hcy.suzhoubusquery.event.UpdateCollectEvent;
+import com.hcy.suzhoubusquery.event.UpdateCollectStationEvent;
 import com.hcy.suzhoubusquery.net.HttpRequest;
 import com.hcy.suzhoubusquery.utils.BaseBean;
 import com.hcy.suzhoubusquery.utils.InputTools;
@@ -76,9 +77,6 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
     @Override
     public void onPause() {
         super.onPause();
-        if(LineNumLV.getVisibility() != View.GONE){
-            LineNumLV.setVisibility(View.GONE);
-        }
     }
 
     @Override
@@ -210,6 +208,7 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
                                             } else {
                                                 MyApplication.getInstances().showToast("该线路编号为空");
                                             }
+                                            updateCollect();
 
                                         }
                                     });
