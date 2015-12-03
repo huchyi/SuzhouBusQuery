@@ -81,7 +81,7 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
 
     private void getData() {
         if (!NetworkUtils.isConnected(this)) {
-            MyApplication.getInstances().showToast("请检查网络连接");
+            MyApplication.getInstances().showToast(MyApplication.getInstances().getString(R.string.please_check_newwork));
             return;
         }
         mProgressBar.setVisibility(View.VISIBLE);

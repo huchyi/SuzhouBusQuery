@@ -181,7 +181,7 @@ public class MainStationFragment extends Fragment implements View.OnClickListene
             InputTools.HideKeyboard(mInputET);
         }
         if (!NetworkUtils.isConnected(getActivity())) {
-            MyApplication.getInstances().showToast("请检查网络连接");
+            MyApplication.getInstances().showToast(MyApplication.getInstances().getString(R.string.please_check_newwork));
             return;
         }
         mProgressBar.setVisibility(View.VISIBLE);
