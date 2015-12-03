@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,7 +34,7 @@ public class StationDetailActivity extends Activity implements View.OnClickListe
 
     private TextView mStationTV;
     private ListView mListView;
-    private ProgressBar mProgressBar;
+    private LinearLayout mProgressBar;
 
     private ArrayList<BaseBean> mBeans = new ArrayList<>();
     private StationDetailBaseAdapter mStationDetailBaseAdapter;
@@ -63,7 +64,7 @@ public class StationDetailActivity extends Activity implements View.OnClickListe
         findViewById(R.id.title_bar).setOnClickListener(this);
         findViewById(R.id.car_station_refresh).setOnClickListener(this);
 
-        mProgressBar = (ProgressBar) findViewById(R.id.progress);
+        mProgressBar = (LinearLayout) findViewById(R.id.progress);
         initData();
         getData();
     }

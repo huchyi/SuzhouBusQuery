@@ -32,11 +32,11 @@
             android:id="@+id/delete_text"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:visibility="gone"
-            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
             android:scaleType="centerInside"
-            android:src="@drawable/search_input_clean" />
+            android:src="@drawable/search_input_clean"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/to_search"
@@ -109,6 +109,7 @@
         android:layout_marginTop="-48dp"
         android:background="@drawable/fragment_line_num_bg"
         android:orientation="vertical">
+
         <ListView
             android:id="@+id/listview_line"
             android:layout_width="match_parent"
@@ -119,11 +120,30 @@
             android:visibility="visible" />
     </LinearLayout>
 
-    <ProgressBar
+    <LinearLayout
         android:id="@+id/progress"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="70dp"
+        android:layout_height="80dp"
         android:layout_centerInParent="true"
-        android:visibility="gone" />
+        android:background="@drawable/bg_common_laoding"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
+        <ProgressBar
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:indeterminate="false"
+            android:indeterminateDrawable="@drawable/dialog_style_xml_icon" />
+
+        <TextView
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="loading..."
+            android:textColor="@color/font_main_aaaaaa"
+            android:textSize="12dp" />
+
+
+    </LinearLayout>
 </RelativeLayout>

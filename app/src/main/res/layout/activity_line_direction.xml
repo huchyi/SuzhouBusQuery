@@ -84,11 +84,31 @@
         android:scrollbars="none" />
 
 
-    <ProgressBar
+    <LinearLayout
         android:id="@+id/progress"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="70dp"
+        android:layout_height="80dp"
         android:layout_centerInParent="true"
-        android:visibility="gone" />
+        android:background="@drawable/bg_common_laoding"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:indeterminate="false"
+            android:indeterminateDrawable="@drawable/dialog_style_xml_icon" />
+
+        <TextView
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="loading..."
+            android:textColor="@color/font_main_aaaaaa"
+            android:textSize="12dp" />
+
+
+    </LinearLayout>
 
 </RelativeLayout>

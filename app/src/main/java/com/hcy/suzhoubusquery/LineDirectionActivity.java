@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ public class LineDirectionActivity extends Activity implements View.OnClickListe
     private TextView lineNumTV;
     private TextView toWhereTV;
 
-    private ProgressBar mProgressBar;
+    private LinearLayout mProgressBar;
 
     private ArrayList<BaseBean> mBeans = new ArrayList<>();
 
@@ -64,7 +65,7 @@ public class LineDirectionActivity extends Activity implements View.OnClickListe
         lineNumTV = (TextView) findViewById(R.id.car_line_num);
         toWhereTV = (TextView) findViewById(R.id.car_line_to);
 
-        mProgressBar = (ProgressBar) findViewById(R.id.progress);
+        mProgressBar = (LinearLayout) findViewById(R.id.progress);
         getData();
     }
 

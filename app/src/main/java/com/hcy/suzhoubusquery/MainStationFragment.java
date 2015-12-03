@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -56,7 +57,7 @@ public class MainStationFragment extends Fragment implements View.OnClickListene
     private EditText mInputET;
     private ImageView deleteText;
     private ListView mListView;
-    private ProgressBar mProgressBar;
+    private LinearLayout mProgressBar;
     private ListView mStationListView;
 
     private StationBaseAdapter mStationBaseAdapter;
@@ -102,7 +103,7 @@ public class MainStationFragment extends Fragment implements View.OnClickListene
         view.findViewById(R.id.to_search).setOnClickListener(this);
         view.findViewById(R.id.delete_fav).setOnClickListener(this);
         mListView = (ListView) view.findViewById(R.id.listview);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.progress);
+        mProgressBar = (LinearLayout) view.findViewById(R.id.progress);
         mStationListView = (ListView) view.findViewById(R.id.listview_line);
 
         initData();
