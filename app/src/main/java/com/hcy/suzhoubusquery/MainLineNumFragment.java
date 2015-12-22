@@ -148,7 +148,7 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
             case R.id.delete_fav:
                 //删除
                 CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-                builder.setMessage("确定删除所有的收藏内容吗？");
+                builder.setMessage("确定删除所有的历史记录吗？");
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

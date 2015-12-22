@@ -18,6 +18,7 @@ import com.hcy.suzhoubusquery.net.HttpRequest;
 import com.hcy.suzhoubusquery.utils.BaseBean;
 import com.hcy.suzhoubusquery.utils.NetworkUtils;
 import com.hcy.suzhoubusquery.utils.StringUtils;
+import com.hcy.suzhoubusquery.view.RefreshableView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
  * <p/>
  * StationDetailActivity
  */
-public class StationDetailActivity extends BaseActivity implements View.OnClickListener {
+public class StationDetailActivity extends BaseActivity implements View.OnClickListener, RefreshableView.PullToRefreshListener {
 
     private String mNoteGuid;
     private String mName;
@@ -37,6 +38,8 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
     private TextView mStationTV;
     private ListView mListView;
     private LinearLayout mProgressBar;
+    private RefreshableView mRefreshableView;
+    private boolean isToRefresh = false;
 
     private ArrayList<BaseBean> mBeans = new ArrayList<>();
     private StationDetailBaseAdapter mStationDetailBaseAdapter;
@@ -74,10 +77,13 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
         mListView = (ListView) findViewById(R.id.listview);
         findViewById(R.id.title_bar).setOnClickListener(this);
         findViewById(R.id.car_station_refresh).setOnClickListener(this);
+        mRefreshableView = (RefreshableView) findViewById(R.id.refreshable_view);
+        mRefreshableView.setOnRefreshListener(this, 0);
 
         mProgressBar = (LinearLayout) findViewById(R.id.progress);
         initData();
         getData();
+
     }
 
     private void initData(){
@@ -109,7 +115,9 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
             MyApplication.getInstances().showToast("查询失败");
             return;
         }
-        mProgressBar.setVisibility(View.VISIBLE);
+        if(!isToRefresh){
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
         HttpRequest.getInstances().getDetailedNameData(mNoteGuid, new HttpRequest.ICallBack() {
             @Override
             public void onSuccess(final String json) {
@@ -117,6 +125,10 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public void run() {
                         mProgressBar.setVisibility(View.GONE);
+                        if(isToRefresh){
+                            isToRefresh = false;
+                            mRefreshableView.finishRefreshing();
+                        }
                         try {
                             BaseBean bean = new BaseBean(new JSONObject(json));
                             if (0 == bean.getInt("errorCode")) {
@@ -158,6 +170,10 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public void run() {
                         mProgressBar.setVisibility(View.GONE);
+                        if(isToRefresh){
+                            isToRefresh = false;
+                            mRefreshableView.finishRefreshing();
+                        }
                         if (StringUtils.isNullOrNullStr(msg)) {
                             MyApplication.getInstances().showToast("请求错误");
                         } else {
@@ -176,5 +192,11 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
         } else if (v.getId() == R.id.car_station_refresh) {
             getData();
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        isToRefresh = true;
+        getData();
     }
 }

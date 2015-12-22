@@ -18,14 +18,14 @@
 
     <TextView
         android:id="@+id/car_station"
-        android:layout_below="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_below="@+id/title_bar"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="50dp"
         android:background="@drawable/custom_dialog_bg"
         android:gravity="center_vertical"
         android:padding="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="50dp"
         android:textColor="#000000"
         android:textSize="16dp" />
 
@@ -33,28 +33,32 @@
         android:id="@+id/car_station_refresh"
         android:layout_width="48dp"
         android:layout_height="40dp"
-        android:paddingRight="10dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/title_bar"
         android:layout_marginTop="1dp"
+        android:paddingRight="10dp"
         android:scaleType="centerInside"
         android:src="@drawable/refresh" />
 
-
-    <ListView
-        android:id="@+id/listview"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+    <com.hcy.suzhoubusquery.view.RefreshableView
+        android:id="@+id/refreshable_view"
         android:layout_width="match_parent"
+        android:layout_marginTop="11dp"
+        android:paddingBottom="10dp"
         android:layout_height="match_parent"
-        android:layout_below="@+id/car_station"
-        android:layout_marginTop="1dp"
-        android:background="#ffffff"
-        android:divider="#d2d2d2"
-        android:dividerHeight="0.6dp"
-        android:scrollbars="none" />
+        android:layout_below="@+id/car_station">
+
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#ffffff"
+            android:divider="#d2d2d2"
+            android:dividerHeight="0.6dp"
+            android:scrollbars="none" />
+    </com.hcy.suzhoubusquery.view.RefreshableView>
 
     <LinearLayout
         android:id="@+id/progress"
@@ -73,9 +77,9 @@
             android:indeterminateDrawable="@drawable/dialog_style_xml_icon" />
 
         <TextView
-            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="loading..."
             android:textColor="@color/font_main_aaaaaa"
             android:textSize="12dp" />

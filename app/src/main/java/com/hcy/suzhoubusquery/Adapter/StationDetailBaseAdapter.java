@@ -85,8 +85,9 @@ public class StationDetailBaseAdapter extends BaseAdapter {
 
         if(isNumeric(carDistinceStr)){
             try{
-                int num = Integer.parseInt(carDistinceStr);
-                String time = "约"+ (num * 3) +"分钟到站";
+                int num = (int)(Integer.parseInt(carDistinceStr) * 2.1);
+                String timeStr = num > 60 ?(num/60 + "小时" + num%60 + "分钟"):(num + "分钟");
+                String time = "约"+ timeStr +"到站";
                 holder.carAlready.setText(time);
                 holder.carAlready.setVisibility(View.VISIBLE);
             }catch (Exception e){

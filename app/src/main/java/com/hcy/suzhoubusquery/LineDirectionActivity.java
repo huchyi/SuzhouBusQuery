@@ -17,6 +17,7 @@ import com.hcy.suzhoubusquery.net.HttpRequest;
 import com.hcy.suzhoubusquery.utils.BaseBean;
 import com.hcy.suzhoubusquery.utils.NetworkUtils;
 import com.hcy.suzhoubusquery.utils.StringUtils;
+import com.hcy.suzhoubusquery.view.RefreshableView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
  * <p/>
  * LineDirectionActivity
  */
-public class LineDirectionActivity extends BaseActivity implements View.OnClickListener {
+public class LineDirectionActivity extends BaseActivity implements View.OnClickListener, RefreshableView.PullToRefreshListener {
 
     private ListView mListView;
     private LineDirectionBaseAdapter mLineDirectionBaseAdapter;
@@ -36,6 +37,8 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
 
     private TextView lineNumTV;
     private TextView toWhereTV;
+    private RefreshableView mRefreshableView;
+    private boolean isToRefresh = false;
 
     private LinearLayout mProgressBar;
 
@@ -63,6 +66,8 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
         mListView = (ListView) findViewById(R.id.listview);
         findViewById(R.id.title_bar).setOnClickListener(this);
         findViewById(R.id.car_line_refresh).setOnClickListener(this);
+        mRefreshableView = (RefreshableView) findViewById(R.id.refreshable_view);
+        mRefreshableView.setOnRefreshListener(this, 1);
 
         lineNumTV = (TextView) findViewById(R.id.car_line_num);
         toWhereTV = (TextView) findViewById(R.id.car_line_to);
@@ -101,7 +106,9 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
             MyApplication.getInstances().showToast(MyApplication.getInstances().getString(R.string.please_check_newwork));
             return;
         }
-        mProgressBar.setVisibility(View.VISIBLE);
+        if(!isToRefresh){
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
         HttpRequest.getInstances().getLineDirectionData(mGuid, new HttpRequest.ICallBack() {
 
 
@@ -112,6 +119,10 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public void run() {
                         mProgressBar.setVisibility(View.GONE);
+                        if(isToRefresh){
+                            isToRefresh = false;
+                            mRefreshableView.finishRefreshing();
+                        }
                         try {
                             BaseBean bean = new BaseBean(new JSONObject(json));
                             if (0 == bean.getInt("errorCode")) {
@@ -158,6 +169,10 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public void run() {
                         mProgressBar.setVisibility(View.GONE);
+                        if(isToRefresh){
+                            isToRefresh = false;
+                            mRefreshableView.finishRefreshing();
+                        }
                         if (StringUtils.isNullOrNullStr(msg)) {
                             MyApplication.getInstances().showToast("请求错误");
                         } else {
@@ -169,4 +184,9 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
         });
     }
 
+    @Override
+    public void onRefresh() {
+        isToRefresh = true;
+        getData();
+    }
 }
