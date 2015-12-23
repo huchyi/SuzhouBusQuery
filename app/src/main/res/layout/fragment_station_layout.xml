@@ -110,7 +110,7 @@
         android:layout_marginTop="-48dp"
         android:background="@drawable/fragment_line_num_bg"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
         <ListView
             android:id="@+id/listview_line"
             android:layout_width="match_parent"
