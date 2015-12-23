@@ -15,7 +15,7 @@
         android:textColor="#438bf3"
         android:textSize="16dp" />
 
-    <TextView
+    <com.hcy.suzhoubusquery.view.CustomTextView
         android:id="@+id/station_car_about_already"
         android:layout_width="match_parent"
         android:layout_height="30sp"

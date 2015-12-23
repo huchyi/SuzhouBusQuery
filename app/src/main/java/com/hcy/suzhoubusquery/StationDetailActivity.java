@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -40,9 +41,12 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
     private LinearLayout mProgressBar;
     private RefreshableView mRefreshableView;
     private boolean isToRefresh = false;
+    private boolean isAutoRefresh = false;
 
     private ArrayList<BaseBean> mBeans = new ArrayList<>();
     private StationDetailBaseAdapter mStationDetailBaseAdapter;
+
+    private Handler handler= new Handler();
 
     public static void startActivity(Context context, String name, String id) {
         MyApplication.getInstances().checkActivity((Activity) context);
@@ -61,14 +65,6 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        getParam();
-        initData();
-        getData();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station_detail);
@@ -83,7 +79,13 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
         mProgressBar = (LinearLayout) findViewById(R.id.progress);
         initData();
         getData();
+        handler.postDelayed(runnable, 3 * 60 * 1000);//3分钟自动刷新一次
+    }
 
+    @Override
+    protected void onDestroy() {
+        handler.removeCallbacks(runnable);//停止定时器
+        super.onDestroy();
     }
 
     private void initData(){
@@ -115,7 +117,8 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
             MyApplication.getInstances().showToast("查询失败");
             return;
         }
-        if(!isToRefresh){
+        if(!isToRefresh || isAutoRefresh){
+            isAutoRefresh = false;
             mProgressBar.setVisibility(View.VISIBLE);
         }
         HttpRequest.getInstances().getDetailedNameData(mNoteGuid, new HttpRequest.ICallBack() {
@@ -199,4 +202,13 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
         isToRefresh = true;
         getData();
     }
+
+   private Runnable runnable=new Runnable() {
+        @Override
+        public void run() {
+            isAutoRefresh = true;
+            getData();
+            handler.postDelayed(runnable, 3 * 60 * 1000);//3分钟自动刷新一次
+        }
+    };
 }

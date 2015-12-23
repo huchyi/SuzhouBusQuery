@@ -18,4 +18,7 @@
     <string name="updated_just_now">刚刚更新</string>
     <string name="time_error">时间有问题</string>
 
+
+    <string name="station_detail_list_time_str">准备上车</string>
+
 </resources>

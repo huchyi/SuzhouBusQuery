@@ -11,6 +11,7 @@ import com.hcy.suzhoubusquery.MyApplication;
 import com.hcy.suzhoubusquery.R;
 import com.hcy.suzhoubusquery.utils.BaseBean;
 import com.hcy.suzhoubusquery.utils.StringUtils;
+import com.hcy.suzhoubusquery.view.CustomTextView;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -58,7 +59,7 @@ public class StationDetailBaseAdapter extends BaseAdapter {
             holder.carLine = (TextView) convertView.findViewById(R.id.station_car_line);
             holder.carDistince = (TextView) convertView.findViewById(R.id.station_car_distince);
             holder.carDirection = (TextView) convertView.findViewById(R.id.station_car_direction);
-            holder.carAlready = (TextView) convertView.findViewById(R.id.station_car_about_already);
+            holder.carAlready = (CustomTextView) convertView.findViewById(R.id.station_car_about_already);
             holder.carNow = (TextView) convertView.findViewById(R.id.station_car_now);
             holder.carTime = (TextView) convertView.findViewById(R.id.station_car_time);
             convertView.setTag(holder);
@@ -85,10 +86,8 @@ public class StationDetailBaseAdapter extends BaseAdapter {
 
         if(isNumeric(carDistinceStr)){
             try{
-                int num = (int)(Integer.parseInt(carDistinceStr) * 2.1);
-                String timeStr = num > 60 ?(num/60 + "小时" + num%60 + "分钟"):(num + "分钟");
-                String time = "约"+ timeStr +"到站";
-                holder.carAlready.setText(time);
+                float num = (float)(Integer.parseInt(carDistinceStr) * 2.1);
+                holder.carAlready.setTextStr(num);
                 holder.carAlready.setVisibility(View.VISIBLE);
             }catch (Exception e){
                 e.printStackTrace();
@@ -126,7 +125,7 @@ public class StationDetailBaseAdapter extends BaseAdapter {
         TextView carLine;
         TextView carDistince;
         TextView carDirection;
-        TextView carAlready;
+        CustomTextView carAlready;
         TextView carNow;
         TextView carTime;
     }

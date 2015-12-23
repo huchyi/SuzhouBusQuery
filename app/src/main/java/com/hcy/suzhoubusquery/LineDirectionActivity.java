@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,10 +40,13 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
     private TextView toWhereTV;
     private RefreshableView mRefreshableView;
     private boolean isToRefresh = false;
+    private boolean isAutoRefresh = false;
 
     private LinearLayout mProgressBar;
 
     private ArrayList<BaseBean> mBeans = new ArrayList<>();
+
+    private Handler handler= new Handler();
 
     public static void startActivity(Context context, String id) {
         MyApplication.getInstances().checkActivity((Activity) context);
@@ -74,15 +78,13 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
 
         mProgressBar = (LinearLayout) findViewById(R.id.progress);
         getData();
+        handler.postDelayed(runnable, 60 * 1000);//1分钟自动刷新一次
     }
 
     @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.title_bar) {
-            finish();
-        } else if (v.getId() == R.id.car_line_refresh) {
-            getData();
-        }
+    protected void onDestroy() {
+        handler.removeCallbacks(runnable);//停止定时器
+        super.onDestroy();
     }
 
     int a;
@@ -106,7 +108,8 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
             MyApplication.getInstances().showToast(MyApplication.getInstances().getString(R.string.please_check_newwork));
             return;
         }
-        if(!isToRefresh){
+        if(!isToRefresh || isAutoRefresh){
+            isAutoRefresh = false;
             mProgressBar.setVisibility(View.VISIBLE);
         }
         HttpRequest.getInstances().getLineDirectionData(mGuid, new HttpRequest.ICallBack() {
@@ -184,9 +187,29 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
         });
     }
 
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.title_bar) {
+            finish();
+        } else if (v.getId() == R.id.car_line_refresh) {
+            getData();
+        }
+    }
+
     @Override
     public void onRefresh() {
         isToRefresh = true;
         getData();
     }
+
+
+    private Runnable runnable=new Runnable() {
+        @Override
+        public void run() {
+            isAutoRefresh = true;
+            getData();
+            handler.postDelayed(runnable, 60 * 1000);//1分钟自动刷新一次
+        }
+    };
 }
