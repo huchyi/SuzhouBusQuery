@@ -85,6 +85,8 @@
             android:layout_below="@+id/car_line_to_ll"
             android:background="#ffffff"
             android:divider="#00000000"
+            android:overScrollMode="never"
+            android:fadingEdge="none"
             android:scrollbars="none" />
     </com.hcy.suzhoubusquery.view.RefreshableView>
 

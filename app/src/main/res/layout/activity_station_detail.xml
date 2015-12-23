@@ -55,6 +55,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="#ffffff"
+            android:overScrollMode="never"
+            android:fadingEdge="none"
             android:divider="#d2d2d2"
             android:dividerHeight="0.6dp"
             android:scrollbars="none" />
