@@ -103,23 +103,21 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/search_result_listview_line_ll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/input_ll"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="-48dp"
         android:background="@drawable/fragment_line_num_bg"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:visibility="visible">
         <ListView
             android:id="@+id/listview_line"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="#d2d2d2"
             android:dividerHeight="0.8px"
-            android:scrollbars="none"
-            android:visibility="visible" />
+            android:scrollbars="none" />
     </LinearLayout>
 
     <LinearLayout

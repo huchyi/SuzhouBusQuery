@@ -55,7 +55,8 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
     private ImageView deleteText;
     private ListView mListView;
     private LinearLayout mProgressBar;
-    private ListView LineNumLV;
+    private ListView mSearchContenLV;
+    private LinearLayout mSearchContentLL;
 
     private LineNumBaseAdapter mLineNumBaseAdapter;
 
@@ -102,7 +103,9 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
         view.findViewById(R.id.delete_fav).setOnClickListener(this);
         mListView = (ListView) view.findViewById(R.id.listview);
         mProgressBar = (LinearLayout) view.findViewById(R.id.progress);
-        LineNumLV = (ListView) view.findViewById(R.id.listview_line);
+        mSearchContenLV = (ListView) view.findViewById(R.id.listview_line);
+        mSearchContentLL = (LinearLayout) view.findViewById(R.id.search_result_listview_line_ll);
+        
 
         initData();
     }
@@ -123,8 +126,8 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
         @Override
         public void afterTextChanged(Editable s) {
             if (s.length() <= 0) {
-                if(LineNumLV.getVisibility() != View.GONE){
-                    LineNumLV.setVisibility(View.GONE);
+                if(mSearchContentLL.getVisibility() != View.GONE){
+                    mSearchContentLL.setVisibility(View.GONE);
                 }
                 deleteText.setVisibility(View.GONE);
             } else {
@@ -209,10 +212,10 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
                             if (0 == bean.getInt("errorCode")) {
                                 ArrayList<BaseBean> beas = (ArrayList<BaseBean>) bean.get("list");
                                 if(beas != null ){
-                                    LineNumLV.setVisibility(View.VISIBLE);
+                                    mSearchContentLL.setVisibility(View.VISIBLE);
                                     mLineNumBaseAdapter = new LineNumBaseAdapter(getActivity(), beas);
-                                    LineNumLV.setAdapter(mLineNumBaseAdapter);
-                                    LineNumLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    mSearchContenLV.setAdapter(mLineNumBaseAdapter);
+                                    mSearchContenLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                         @Override
                                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                             BaseBean bean = (BaseBean) parent.getAdapter().getItem(position);

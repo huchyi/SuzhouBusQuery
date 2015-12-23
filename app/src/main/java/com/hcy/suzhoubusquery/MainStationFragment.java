@@ -58,6 +58,7 @@ public class MainStationFragment extends Fragment implements View.OnClickListene
     private ListView mListView;
     private LinearLayout mProgressBar;
     private ListView mStationListView;
+    private LinearLayout mSearchContentLL;
 
     private StationBaseAdapter mStationBaseAdapter;
 
@@ -105,6 +106,7 @@ public class MainStationFragment extends Fragment implements View.OnClickListene
         mListView = (ListView) view.findViewById(R.id.listview);
         mProgressBar = (LinearLayout) view.findViewById(R.id.progress);
         mStationListView = (ListView) view.findViewById(R.id.listview_line);
+        mSearchContentLL = (LinearLayout) view.findViewById(R.id.search_result_listview_line_ll);
 
         initData();
     }
@@ -127,8 +129,8 @@ public class MainStationFragment extends Fragment implements View.OnClickListene
         @Override
         public void afterTextChanged(Editable s) {
             if (s.length() <= 0) {
-                if (mStationListView.getVisibility() != View.GONE) {
-                    mStationListView.setVisibility(View.GONE);
+                if (mSearchContentLL.getVisibility() != View.GONE) {
+                    mSearchContentLL.setVisibility(View.GONE);
                 }
                 deleteText.setVisibility(View.GONE);
             } else {
@@ -214,7 +216,7 @@ public class MainStationFragment extends Fragment implements View.OnClickListene
                             if (0 == bean.getInt("errorCode")) {
                                 ArrayList<BaseBean> beans = (ArrayList<BaseBean>) bean.get("list");
                                 if (beans != null) {
-                                    mStationListView.setVisibility(View.VISIBLE);
+                                    mSearchContentLL.setVisibility(View.VISIBLE);
                                     mStationBaseAdapter = new StationBaseAdapter(getActivity(), beans);
                                     mStationListView.setAdapter(mStationBaseAdapter);
                                     mStationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
