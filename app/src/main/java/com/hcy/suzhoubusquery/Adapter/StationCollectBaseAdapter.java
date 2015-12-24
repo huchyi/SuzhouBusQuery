@@ -21,11 +21,12 @@ import com.hcy.suzhoubusquery.view.CustomDialog;
 
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/12/2.
- *
+ * <p/>
  * StationCollectBaseAdapter
  */
 public class StationCollectBaseAdapter extends BaseAdapter {
@@ -105,51 +106,113 @@ public class StationCollectBaseAdapter extends BaseAdapter {
         public void onClick(final View v) {
             int pos = (int) v.getTag();
             final BaseBean item = items.get(pos);
-            CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
-            builder.setMessage("确定删除（"+item.getStr("Name") +"）吗？");
-            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    String resetJson = "{\"Name\":\"" + item.getStr("Name")
-                            + "\",\"NoteGuid\":\"" + item.getStr("NoteGuid")
-                            + "\",\"Canton\":\"" + item.getStr("Canton")
-                            + "\",\"Road\":\"" + item.getStr("Road")
-                            + "\",\"Direct\":\"" + item.getStr("Direct")
-                            + "\"}";
-                    String lineJson = LineNumInfoPreferenceUtil.getValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_STATION_JSON, "");
-                    if (lineJson.contains(resetJson)) {
-                        lineJson = lineJson.replace(resetJson,"");
-                        if(lineJson.contains(",]}")){
-                            lineJson = lineJson.replace(",]}","]}");
-                        }
-                        if(lineJson.contains(",,")){
-                            lineJson = lineJson.replace(",,", ",");
-                        }
-                        if(lineJson.contains("{\"list\":[,{")){
-                            lineJson = lineJson.replace("{\"list\":[,{", "{\"list\":[{");
-                        }
-                        if(lineJson.length() < 20){
-                            LineNumInfoPreferenceUtil.setValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_STATION_JSON, "");
-                        }else{
-                            LineNumInfoPreferenceUtil.setValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_STATION_JSON, lineJson);
-                        }
-                        EventBus.getDefault().post(new UpdateCollectStationEvent());
-                    }else{
-                        MyApplication.getInstances().showToast("删除失败");
-                    }
-                }
-            });
-            builder.setNegativeButton("取消",
-                    new android.content.DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
+//            CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
+//            builder.setMessage("确定删除（"+item.getStr("Name") +"）吗？");
+//            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.dismiss();
+//                    String resetJson = "{\"Name\":\"" + item.getStr("Name")
+//                            + "\",\"NoteGuid\":\"" + item.getStr("NoteGuid")
+//                            + "\",\"Canton\":\"" + item.getStr("Canton")
+//                            + "\",\"Road\":\"" + item.getStr("Road")
+//                            + "\",\"Direct\":\"" + item.getStr("Direct")
+//                            + "\"}";
+//                    String lineJson = LineNumInfoPreferenceUtil.getValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_STATION_JSON, "");
+//                    if (lineJson.contains(resetJson)) {
+//                        lineJson = lineJson.replace(resetJson,"");
+//                        if(lineJson.contains(",]}")){
+//                            lineJson = lineJson.replace(",]}","]}");
+//                        }
+//                        if(lineJson.contains(",,")){
+//                            lineJson = lineJson.replace(",,", ",");
+//                        }
+//                        if(lineJson.contains("{\"list\":[,{")){
+//                            lineJson = lineJson.replace("{\"list\":[,{", "{\"list\":[{");
+//                        }
+//                        if(lineJson.length() < 20){
+//                            LineNumInfoPreferenceUtil.setValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_STATION_JSON, "");
+//                        }else{
+//                            LineNumInfoPreferenceUtil.setValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_STATION_JSON, lineJson);
+//                        }
+//                        EventBus.getDefault().post(new UpdateCollectStationEvent());
+//                    }else{
+//                        MyApplication.getInstances().showToast("删除失败");
+//                    }
+//                }
+//            });
+//            builder.setNegativeButton("取消",
+//                    new android.content.DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    });
+//
+//            builder.create().show();
 
-            builder.create().show();
+
+            new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("提示")
+                    .setContentText("确定删除（" + item.getStr("Name") + "）吗？")
+                    .setCancelText("取消")
+                    .setConfirmText("确定")
+                    .showCancelButton(true)
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.setTitleText("取消!")
+                                    .setContentText("你取消了删除")
+                                    .setConfirmText("OK")
+                                    .showCancelButton(false)
+                                    .setCancelClickListener(null)
+                                    .setConfirmClickListener(null)
+                                    .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                        }
+                    })
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            String strContent = "你已经删除了(" + item.getStr("Name") + ")";
+
+                            String resetJson = "{\"Name\":\"" + item.getStr("Name")
+                                    + "\",\"NoteGuid\":\"" + item.getStr("NoteGuid")
+                                    + "\",\"Canton\":\"" + item.getStr("Canton")
+                                    + "\",\"Road\":\"" + item.getStr("Road")
+                                    + "\",\"Direct\":\"" + item.getStr("Direct")
+                                    + "\"}";
+                            String lineJson = LineNumInfoPreferenceUtil.getValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_STATION_JSON, "");
+                            if (lineJson.contains(resetJson)) {
+                                lineJson = lineJson.replace(resetJson, "");
+                                if (lineJson.contains(",]}")) {
+                                    lineJson = lineJson.replace(",]}", "]}");
+                                }
+                                if (lineJson.contains(",,")) {
+                                    lineJson = lineJson.replace(",,", ",");
+                                }
+                                if (lineJson.contains("{\"list\":[,{")) {
+                                    lineJson = lineJson.replace("{\"list\":[,{", "{\"list\":[{");
+                                }
+                                if (lineJson.length() < 20) {
+                                    LineNumInfoPreferenceUtil.setValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_STATION_JSON, "");
+                                } else {
+                                    LineNumInfoPreferenceUtil.setValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_STATION_JSON, lineJson);
+                                }
+                                EventBus.getDefault().post(new UpdateCollectStationEvent());
+                            } else {
+                                strContent = "删除失败";
+                            }
+
+                            sDialog.setTitleText("删除!")
+                                    .setContentText(strContent)
+                                    .setConfirmText("OK")
+                                    .showCancelButton(false)
+                                    .setCancelClickListener(null)
+                                    .setConfirmClickListener(null)
+                                    .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                        }
+                    })
+                    .show();
         }
     };
-
 
 
     private class Holder {

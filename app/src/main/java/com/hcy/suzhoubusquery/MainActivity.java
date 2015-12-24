@@ -9,9 +9,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 
+import com.hcy.suzhoubusquery.utils.LineNumInfoPreferenceUtil;
 import com.hcy.suzhoubusquery.utils.MethodUtils;
 import com.hcy.suzhoubusquery.utils.PagerSlidingTabStrip;
 import com.hcy.suzhoubusquery.view.CustomDialog;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends FragmentActivity {
 
@@ -90,25 +93,48 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
         if (keyCode == KeyEvent.KEYCODE_BACK ){
-            CustomDialog.Builder builder = new CustomDialog.Builder(this);
-            builder.setTitle("提示");
-            builder.setMessage("确定退出吗?");
-            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    MyApplication.getInstances().exit();
-                    System.exit(0);
-                    finish();
-                }
-            });
-            builder.setNegativeButton("取消",
-                    new android.content.DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
+//            CustomDialog.Builder builder = new CustomDialog.Builder(this);
+//            builder.setTitle("提示");
+//            builder.setMessage("确定退出吗?");
+//            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.dismiss();
+//                    MyApplication.getInstances().exit();
+//                    System.exit(0);
+//                    finish();
+//                }
+//            });
+//            builder.setNegativeButton("取消",
+//                    new android.content.DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    });
+//
+//            builder.create().show();
 
-            builder.create().show();
+            new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("提示")
+                    .setContentText("确定退出吗?")
+                    .setConfirmText("确定")
+                    .setCancelText("取消")
+                    .showCancelButton(true)
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            System.exit(0);
+                            sDialog.dismiss();
+                            MyApplication.getInstances().exit();
+                            finish();
+                        }
+                    })
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismiss();
+                        }
+                    })
+                    .show();
         }
         return false;
     }

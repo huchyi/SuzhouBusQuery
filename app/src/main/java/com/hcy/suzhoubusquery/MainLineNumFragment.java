@@ -32,6 +32,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -149,23 +150,63 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
                 }
                 break;
             case R.id.delete_fav:
-                //删除
-                CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-                builder.setMessage("确定删除所有的历史记录吗？");
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        LineNumInfoPreferenceUtil.setValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_NUM_JSON, "");
-                    }
-                });
-                builder.setNegativeButton("取消",
-                        new android.content.DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+//                //删除
+//                CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+//                builder.setMessage("确定删除所有的历史记录吗？");
+//                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                        LineNumInfoPreferenceUtil.setValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_NUM_JSON, "");
+//                    }
+//                });
+//                builder.setNegativeButton("取消",
+//                        new android.content.DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        });
+//
+//                builder.create().show();
 
-                builder.create().show();
+
+                new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("提示")
+                        .setContentText("确定删除所有的历史内容吗？")
+                        .setCancelText("取消")
+                        .setConfirmText("确定")
+                        .showCancelButton(true)
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.setTitleText("取消!")
+                                        .setContentText("你取消了删除")
+                                        .setConfirmText("OK")
+                                        .showCancelButton(false)
+                                        .setCancelClickListener(null)
+                                        .setConfirmClickListener(null)
+                                        .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                            }
+                        })
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.setTitleText("删除!")
+                                        .setContentText("你已经删除了所有内容")
+                                        .setConfirmText("OK")
+                                        .showCancelButton(false)
+                                        .setCancelClickListener(null)
+                                        .setConfirmClickListener(null)
+                                        .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+
+                                //content
+                                LineNumInfoPreferenceUtil.setValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_NUM_JSON, "");
+                                updateCollect();
+                            }
+                        })
+                        .show();
+
+
+
                 break;
             case R.id.delete_text:
                 mInputET.setText("");
