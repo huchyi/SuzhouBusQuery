@@ -129,7 +129,7 @@ public class CollectBaseAdapter extends BaseAdapter {
 
             new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("提示")
-                    .setContentText("确定删除（"+item.getStr("LName") +"公交车）吗？")
+                    .setContentText("确定删除线路（"+item.getStr("LName") +"）吗？")
                     .setCancelText("取消")
                     .setConfirmText("确定")
                     .showCancelButton(true)
@@ -148,7 +148,7 @@ public class CollectBaseAdapter extends BaseAdapter {
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
-                            String strContent = "你已经删除了("+item.getStr("LName") +")公交车";
+                            String strContent = "你已经删除了线路("+item.getStr("LName") +")";
                             String resetJson = "{\"LName\":\"" + item.getStr("LName") + "\",\"LDirection\":\"" + item.getStr("LDirection") + "\",\"Guid\":\"" + item.getStr("Guid") + "\"}";
                             String lineJson = LineNumInfoPreferenceUtil.getValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_NUM_JSON, "");
                             if (lineJson.contains(resetJson)) {

@@ -152,7 +152,7 @@ public class StationCollectBaseAdapter extends BaseAdapter {
 
             new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("提示")
-                    .setContentText("确定删除（" + item.getStr("Name") + "）吗？")
+                    .setContentText("确定删除站台（" + item.getStr("Name") + "）吗？")
                     .setCancelText("取消")
                     .setConfirmText("确定")
                     .showCancelButton(true)
@@ -171,7 +171,7 @@ public class StationCollectBaseAdapter extends BaseAdapter {
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
-                            String strContent = "你已经删除了(" + item.getStr("Name") + ")";
+                            String strContent = "你已经删除了站台(" + item.getStr("Name") + ")";
 
                             String resetJson = "{\"Name\":\"" + item.getStr("Name")
                                     + "\",\"NoteGuid\":\"" + item.getStr("NoteGuid")
