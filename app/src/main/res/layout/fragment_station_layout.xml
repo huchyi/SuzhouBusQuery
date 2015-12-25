@@ -15,6 +15,10 @@
         android:id="@+id/input_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingEnd="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingStart="10dp"
         android:gravity="center_vertical">
 
         <EditText
