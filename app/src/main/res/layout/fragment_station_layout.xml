@@ -127,8 +127,6 @@
             android:divider="#00000000"
             android:dividerHeight="10dp"
             android:paddingBottom="5dp"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
             android:paddingTop="5dp"
             android:scrollbars="none"
             dslv:collapsed_height="1px"
