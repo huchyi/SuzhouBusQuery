@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hcy.dragsortlistview">
+
+    <uses-sdk android:minSdkVersion="11" />
+
+
+</manifest>

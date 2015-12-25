@@ -1,23 +1,19 @@
 package com.hcy.suzhoubusquery.Adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hcy.suzhoubusquery.MyApplication;
 import com.hcy.suzhoubusquery.R;
-import com.hcy.suzhoubusquery.event.UpdateCollectEvent;
 import com.hcy.suzhoubusquery.event.UpdateCollectStationEvent;
 import com.hcy.suzhoubusquery.utils.BaseBean;
 import com.hcy.suzhoubusquery.utils.LineNumInfoPreferenceUtil;
-import com.hcy.suzhoubusquery.view.CustomDialog;
 
 import java.util.ArrayList;
 
@@ -33,6 +29,7 @@ public class StationCollectBaseAdapter extends BaseAdapter {
     private LayoutInflater inflater = null;
     private ArrayList<BaseBean> items;
     private Context mContext;
+    private boolean isShowDelete = false;
 
     public StationCollectBaseAdapter(Context context, ArrayList<BaseBean> items) {
         this.inflater = LayoutInflater.from(context);
@@ -40,6 +37,25 @@ public class StationCollectBaseAdapter extends BaseAdapter {
         this.mContext = context;
     }
 
+
+    public void remove(int arg0) {//删除指定位置的item
+        items.remove(arg0);
+        this.notifyDataSetChanged();//不要忘记更改适配器对象的数据源
+    }
+
+    public void insert(BaseBean item, int arg0) {//在指定位置插入item
+        items.add(arg0, item);
+        this.notifyDataSetChanged();
+    }
+
+    public void setDeleteButton(boolean isShow){
+        this.isShowDelete = isShow;
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<BaseBean> getAllData(){
+        return items;
+    }
 
     @Override
     public int getCount() {
@@ -95,8 +111,13 @@ public class StationCollectBaseAdapter extends BaseAdapter {
                 + "<font color=" + MyApplication.getInstances().getResources().getColor(R.color.font_blue_text) + ">" + item.getStr("Direct")
                 + "</font> "));
 
-        holder.delete.setOnClickListener(onClickListener);
-        holder.delete.setTag(position);
+        if(isShowDelete){
+            holder.delete.setOnClickListener(onClickListener);
+            holder.delete.setTag(position);
+            holder.delete.setVisibility(View.VISIBLE);
+        }else{
+            holder.delete.setVisibility(View.GONE);
+        }
         return convertView;
     }
 

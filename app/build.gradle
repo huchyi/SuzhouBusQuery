@@ -26,4 +26,5 @@ dependencies {
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'cn.pedant.sweetalert:library:1.3'
     compile files('libs/java-json.jar')
+    compile project(':dragsortlistview')
 }

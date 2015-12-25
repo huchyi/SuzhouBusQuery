@@ -1,22 +1,17 @@
 package com.hcy.suzhoubusquery.Adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.hcy.suzhoubusquery.MyApplication;
 import com.hcy.suzhoubusquery.R;
 import com.hcy.suzhoubusquery.event.UpdateCollectEvent;
 import com.hcy.suzhoubusquery.utils.BaseBean;
 import com.hcy.suzhoubusquery.utils.LineNumInfoPreferenceUtil;
-import com.hcy.suzhoubusquery.view.CustomDialog;
 
 import java.util.ArrayList;
 
@@ -32,6 +27,7 @@ public class CollectBaseAdapter extends BaseAdapter {
     private LayoutInflater inflater = null;
     private ArrayList<BaseBean> items;
     private Context mContext;
+    private boolean isShowDelete = false;
 
     public CollectBaseAdapter(Context context, ArrayList<BaseBean> items) {
         this.inflater = LayoutInflater.from(context);
@@ -39,6 +35,24 @@ public class CollectBaseAdapter extends BaseAdapter {
         this.mContext = context;
     }
 
+    public void remove(int arg0) {//删除指定位置的item
+        items.remove(arg0);
+        this.notifyDataSetChanged();//不要忘记更改适配器对象的数据源
+    }
+
+    public void insert(BaseBean item, int arg0) {//在指定位置插入item
+        items.add(arg0, item);
+        this.notifyDataSetChanged();
+    }
+
+    public void setDeleteButton(boolean isShow){
+        this.isShowDelete = isShow;
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<BaseBean> getAllData(){
+        return items;
+    }
 
     @Override
     public int getCount() {
@@ -77,8 +91,13 @@ public class CollectBaseAdapter extends BaseAdapter {
 
         holder.lineNum.setText(item.getStr("LName") + "");
         holder.linNumToWhere.setText(item.getStr("LDirection") + "");
-        holder.delete.setOnClickListener(onClickListener);
-        holder.delete.setTag(position);
+        if(isShowDelete){
+            holder.delete.setOnClickListener(onClickListener);
+            holder.delete.setTag(position);
+            holder.delete.setVisibility(View.VISIBLE);
+        }else{
+            holder.delete.setVisibility(View.GONE);
+        }
         return convertView;
     }
 
@@ -87,45 +106,6 @@ public class CollectBaseAdapter extends BaseAdapter {
         public void onClick(final View v) {
             int pos = (int) v.getTag();
             final BaseBean item = items.get(pos);
-//            CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
-//            builder.setMessage("确定删除（"+item.getStr("LName") +"公交车）吗？");
-//            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                public void onClick(DialogInterface dialog, int which) {
-//                    dialog.dismiss();
-//                    String resetJson = "{\"LName\":\"" + item.getStr("LName") + "\",\"LDirection\":\"" + item.getStr("LDirection") + "\",\"Guid\":\"" + item.getStr("Guid") + "\"}";
-//                    String lineJson = LineNumInfoPreferenceUtil.getValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_NUM_JSON, "");
-//                    if (lineJson.contains(resetJson)) {
-//                        lineJson = lineJson.replace(resetJson,"");
-//                        if(lineJson.contains(",]}")){
-//                            lineJson = lineJson.replace(",]}","]}");
-//                        }
-//                        if(lineJson.contains(",,")){
-//                            lineJson = lineJson.replace(",,", ",");
-//                        }
-//                        if(lineJson.contains("{\"list\":[,{")){
-//                            lineJson = lineJson.replace("{\"list\":[,{", "{\"list\":[{");
-//                        }
-//                        if(lineJson.length() < 20){
-//                            LineNumInfoPreferenceUtil.setValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_NUM_JSON, "");
-//                        }else{
-//                            LineNumInfoPreferenceUtil.setValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_NUM_JSON, lineJson);
-//                        }
-//                        EventBus.getDefault().post(new UpdateCollectEvent());
-//                    }else{
-//                        MyApplication.getInstances().showToast("删除失败");
-//                    }
-//                }
-//            });
-//            builder.setNegativeButton("取消",
-//                    new android.content.DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
-//                        }
-//                    });
-//
-//            builder.create().show();
-
-
 
             new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("提示")

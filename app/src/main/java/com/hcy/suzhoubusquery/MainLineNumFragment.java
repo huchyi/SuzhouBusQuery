@@ -1,6 +1,5 @@
 package com.hcy.suzhoubusquery;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -13,19 +12,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 
+import com.hcy.dragsortlistview.DragSortListView;
 import com.hcy.suzhoubusquery.Adapter.CollectBaseAdapter;
 import com.hcy.suzhoubusquery.Adapter.LineNumBaseAdapter;
 import com.hcy.suzhoubusquery.event.UpdateCollectEvent;
-import com.hcy.suzhoubusquery.event.UpdateCollectStationEvent;
 import com.hcy.suzhoubusquery.net.HttpRequest;
 import com.hcy.suzhoubusquery.utils.BaseBean;
 import com.hcy.suzhoubusquery.utils.InputTools;
 import com.hcy.suzhoubusquery.utils.LineNumInfoPreferenceUtil;
 import com.hcy.suzhoubusquery.utils.NetworkUtils;
 import com.hcy.suzhoubusquery.utils.StringUtils;
-import com.hcy.suzhoubusquery.view.CustomDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,14 +51,18 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
 
     private EditText mInputET;
     private ImageView deleteText;
-    private ListView mListView;
+    private DragSortListView mHistoryListView;
     private LinearLayout mProgressBar;
     private ListView mSearchContenLV;
     private LinearLayout mSearchContentLL;
+    private LinearLayout deleteFav;
+    private ImageView mHistoryEditIV;
 
     private LineNumBaseAdapter mLineNumBaseAdapter;
 
     private CollectBaseAdapter mCollectBaseAdapter;
+
+    private boolean isEditHistory = false;
 
 
     @Override
@@ -101,12 +102,15 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
         deleteText = (ImageView) view.findViewById(R.id.delete_text);
         deleteText.setOnClickListener(this);
         view.findViewById(R.id.to_search).setOnClickListener(this);
-        view.findViewById(R.id.delete_fav).setOnClickListener(this);
-        mListView = (ListView) view.findViewById(R.id.listview);
+        deleteFav = (LinearLayout) view.findViewById(R.id.delete_fav);
+        deleteFav.setOnClickListener(this);
+        view.findViewById(R.id.edit_history).setOnClickListener(this);
+        mHistoryEditIV = (ImageView) view.findViewById(R.id.edit_history_imageview);
+        mHistoryListView = (DragSortListView) view.findViewById(R.id.dslv_history_List);
         mProgressBar = (LinearLayout) view.findViewById(R.id.progress);
         mSearchContenLV = (ListView) view.findViewById(R.id.listview_line);
         mSearchContentLL = (LinearLayout) view.findViewById(R.id.search_result_listview_line_ll);
-        
+        mSearchContentLL.setOnClickListener(this);
 
         initData();
     }
@@ -119,15 +123,17 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
     private TextWatcher watcher = new TextWatcher() {
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
 
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
 
         @Override
         public void afterTextChanged(Editable s) {
             if (s.length() <= 0) {
-                if(mSearchContentLL.getVisibility() != View.GONE){
+                if (mSearchContentLL.getVisibility() != View.GONE) {
                     mSearchContentLL.setVisibility(View.GONE);
                 }
                 deleteText.setVisibility(View.GONE);
@@ -204,13 +210,22 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
                             }
                         })
                         .show();
-
-
-
                 break;
             case R.id.delete_text:
                 mInputET.setText("");
                 mInputET.clearFocus();
+                break;
+            case R.id.edit_history:
+                isEditHistory = !isEditHistory;
+                deleteFav.setVisibility(isEditHistory ? View.VISIBLE: View.GONE);
+                mHistoryEditIV.setBackgroundResource(isEditHistory ? R.drawable.edit_history_ok_icon : R.drawable.edit_history_icon);
+                mCollectBaseAdapter.setDeleteButton(isEditHistory);
+                mHistoryListView.setDragEnabled(isEditHistory); //设置是否可拖动。
+                break;
+            case R.id.search_result_listview_line_ll:
+                if (mSearchContentLL.getVisibility() != View.GONE) {
+                    mSearchContentLL.setVisibility(View.GONE);
+                }
                 break;
             default:
                 break;
@@ -218,6 +233,7 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
     }
 
     int a;
+
     private void getData(String input) {
         switch (a) {
             case 101:
@@ -252,7 +268,7 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
                             BaseBean bean = new BaseBean(new JSONObject(json));
                             if (0 == bean.getInt("errorCode")) {
                                 ArrayList<BaseBean> beas = (ArrayList<BaseBean>) bean.get("list");
-                                if(beas != null ){
+                                if (beas != null) {
                                     mSearchContentLL.setVisibility(View.VISIBLE);
                                     mLineNumBaseAdapter = new LineNumBaseAdapter(getActivity(), beas);
                                     mSearchContenLV.setAdapter(mLineNumBaseAdapter);
@@ -272,7 +288,7 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
 
                                         }
                                     });
-                                }else{
+                                } else {
                                     MyApplication.getInstances().showToast("没有该线路的时时信息");
                                 }
                             } else {
@@ -340,6 +356,25 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    private void beanListToJson(ArrayList<BaseBean> beanList) {
+        if (beanList != null && beanList.size() > 0) {
+            LineNumInfoPreferenceUtil.setValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_NUM_JSON, "");
+            String jsonResult = "{\"list\":[";
+            String json;
+            for (int i = 0; i < beanList.size(); i++) {
+                json = "{\"LName\":\"" + beanList.get(i).getStr("LName") + "\",\"LDirection\":\"" + beanList.get(i).getStr("LDirection") + "\",\"Guid\":\"" + beanList.get(i).getStr("Guid") + "\"}";
+                if (i == 0) {
+                    jsonResult += json;
+                } else {
+                    jsonResult = jsonResult + "," + json;
+                }
+            }
+            jsonResult = jsonResult + "]}";
+            LineNumInfoPreferenceUtil.setValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_NUM_JSON, jsonResult);
+        }
+
+    }
+
     private void updateCollect() {
         String lineJson = LineNumInfoPreferenceUtil.getValue(LineNumInfoPreferenceUtil.LineNumKey.LINE_NUM_JSON, "");
         if (!StringUtils.isNullOrNullStr(lineJson)) {
@@ -347,20 +382,11 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
                 BaseBean bean = new BaseBean(new JSONObject(lineJson));
                 ArrayList<BaseBean> beans = (ArrayList<BaseBean>) bean.get("list");
                 mCollectBaseAdapter = new CollectBaseAdapter(getActivity(), beans);
-                mListView.setAdapter(mCollectBaseAdapter);
-                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        BaseBean bean = (BaseBean) parent.getAdapter().getItem(position);
-                        String guidStr = bean.getStr("Guid");
-                        if (!StringUtils.isNullOrNullStr(guidStr)) {
-                            LineDirectionActivity.startActivity(getActivity(), guidStr);
-                        } else {
-                            MyApplication.getInstances().showToast("该线路编号为空");
-                        }
-
-                    }
-                });
+                mHistoryListView.setAdapter(mCollectBaseAdapter);
+                mHistoryListView.setDragEnabled(isEditHistory); //设置是否可拖动。
+                //得到滑动listview并且设置监听器。
+                mHistoryListView.setDropListener(onDrop);
+                mHistoryListView.setOnItemClickListener(onItemClickListener);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -368,10 +394,37 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
             if (mCollectBaseAdapter != null) {
                 ArrayList<BaseBean> beans = new ArrayList<>();
                 mCollectBaseAdapter = new CollectBaseAdapter(getActivity(), beans);
-                mListView.setAdapter(mCollectBaseAdapter);
+                mHistoryListView.setAdapter(mCollectBaseAdapter);
             }
         }
     }
+
+    //监听器在手机拖动停下的时候触发
+    private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
+        @Override
+        public void drop(int from, int to) {//from to 分别表示 被拖动控件原位置 和目标位置
+            if (from != to) {
+                BaseBean item = (BaseBean) mCollectBaseAdapter.getItem(from);//得到listview的适配器
+                mCollectBaseAdapter.remove(from);//在适配器中”原位置“的数据。
+                mCollectBaseAdapter.insert(item, to);//在目标位置中插入被拖动的控件。
+                beanListToJson(mCollectBaseAdapter.getAllData());
+            }
+        }
+    };
+
+    //item 的点击事件
+    private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            BaseBean bean = (BaseBean) parent.getAdapter().getItem(position);
+            String guidStr = bean.getStr("Guid");
+            if (!StringUtils.isNullOrNullStr(guidStr)) {
+                LineDirectionActivity.startActivity(getActivity(), guidStr);
+            } else {
+                MyApplication.getInstances().showToast("该线路编号为空");
+            }
+        }
+    };
 
     public void onEventMainThread(UpdateCollectEvent event) {
         updateCollect();
