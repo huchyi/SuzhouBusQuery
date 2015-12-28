@@ -75,9 +75,6 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     private int underlineColor = 0x1A000000;
     private int dividerColor = 0x1A000000;
 
-    private boolean needRedPoint = false;
-    private Set<Integer> redPointShowSet;
-
     private boolean shouldExpand = false;
     private boolean textAllCaps = true;
 
@@ -153,10 +150,6 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         dividerPadding = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_pstsDividerPadding, dividerPadding);
         tabPadding = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_pstsTabPaddingLeftRight, tabPadding);
         tabBackgroundResId = a.getResourceId(R.styleable.PagerSlidingTabStrip_pstsTabBackground, tabBackgroundResId);
-        needRedPoint = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsNeedRedPoint, needRedPoint);
-        if (needRedPoint) {
-            redPointShowSet = new HashSet<>();
-        }
         shouldExpand = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsShouldExpand, shouldExpand);
         scrollOffset = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_pstsScrollOffset, scrollOffset);
         textAllCaps = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsTextAllCaps, textAllCaps);
@@ -202,11 +195,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         tabCount = pager.getAdapter().getCount();
 
         for (int i = 0; i < tabCount; i++) {
-            if (needRedPoint) {
                 addRedPointTextTab(i, pager.getAdapter().getPageTitle(i).toString());
-            } else {
-                addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
-            }
         }
 
         setTabsSelected(0);
@@ -300,27 +289,6 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
             }
         }
 
-    }
-
-    public void showRedPonit(int position) {
-        if (!needRedPoint) {
-            return;
-        }
-        if (redPointShowSet.contains(position)) {
-            return;
-        }
-        redPointShowSet.add(position);
-        updateTabStyles();
-    }
-
-    public void hideRedPonit(int position) {
-        if (!needRedPoint) {
-            return;
-        }
-        if (redPointShowSet.contains(position)) {
-            redPointShowSet.remove(position);
-            updateTabStyles();
-        }
     }
 
     private void scrollToChild(int position, int offset) {
