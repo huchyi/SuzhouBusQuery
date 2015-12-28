@@ -5,12 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hcy.suzhoubusquery.Adapter.LineDirectionBaseAdapter;
@@ -36,6 +34,7 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
     private LineDirectionBaseAdapter mLineDirectionBaseAdapter;
     private String mGuid;
 
+    private TextView lineStartEndTimeTV;
     private TextView lineNumTV;
     private TextView toWhereTV;
     private RefreshableView mRefreshableView;
@@ -73,6 +72,7 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
         mRefreshableView = (RefreshableView) findViewById(R.id.refreshable_view);
         mRefreshableView.setOnRefreshListener(this, 1);
 
+        lineStartEndTimeTV = (TextView) findViewById(R.id.car_line_start_end_time);
         lineNumTV = (TextView) findViewById(R.id.car_line_num);
         toWhereTV = (TextView) findViewById(R.id.car_line_to);
 
@@ -114,7 +114,6 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
         }
         HttpRequest.getInstances().getLineDirectionData(mGuid, new HttpRequest.ICallBack() {
 
-
             @Override
             public void onSuccess(final String json) {
 
@@ -133,6 +132,7 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
                                 if (bean1 != null) {
                                     lineNumTV.setText(bean1.getStr("LName"));
                                     toWhereTV.setText(bean1.getStr("LDirection"));
+                                    lineStartEndTimeTV.setText("首末班:" + bean1.getStr("LFStdFTime") + " - " + bean1.getStr("LFStdETime"));
                                     ArrayList<BaseBean> beas = (ArrayList<BaseBean>) bean1.get("StandInfo");
                                     if(beas != null){
                                         if (mLineDirectionBaseAdapter == null) {

@@ -59,6 +59,19 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/car_line_start_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_below="@+id/car_line_to_ll"
+        android:textColor="#aaaaaa"
+        android:textSize="14dp"
+        android:text="首末班:"
+        android:paddingBottom="5dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"/>
+
     <ImageView
         android:id="@+id/car_line_refresh"
         android:layout_width="45dp"
@@ -74,7 +87,7 @@
         android:id="@+id/refreshable_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/car_line_to_ll"
+        android:layout_below="@+id/car_line_start_end_time"
         android:layout_marginTop="11dp"
         android:paddingBottom="10dp">
 
