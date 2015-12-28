@@ -77,9 +77,24 @@ public class LineDirectionBaseAdapter extends BaseAdapter {
 
         holder.middleStation.setText(String.valueOf(position+1));
         holder.name.setText(item.getStr("SName"));
+
         String InTime = item.getStr("InTime");
-        holder.time.setText(StringUtils.isNullOrNullStr(InTime) ? "": InTime);
+        String InTimeStr = "";
+        if(!StringUtils.isNullOrNullStr(InTime)){
+            if(InTime.contains(":")){
+                String[] strs = InTime.split(":");
+                if(strs.length > 2){
+                    InTimeStr = strs[0] + ":" + strs[1] + (position == 0 ? " 出发" : " 进站");
+                }else{
+                    InTimeStr = InTime;
+                }
+            }else{
+                InTimeStr = InTime;
+            }
+        }
+        holder.time.setText(InTimeStr);
         String BusInfo = item.getStr("BusInfo");
+
         holder.car.setVisibility(StringUtils.isNullOrNullStr(BusInfo) ? View.INVISIBLE: View.VISIBLE);
         holder.carLine.setVisibility(StringUtils.isNullOrNullStr(BusInfo) ? View.INVISIBLE: View.VISIBLE);
 
