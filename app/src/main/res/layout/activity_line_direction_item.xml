@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="100dp"
     android:background="#ffffff"
     android:orientation="horizontal"
     android:paddingLeft="10dp"
@@ -9,71 +9,66 @@
 
     <ImageView
         android:id="@+id/car"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:contentDescription="@null"
         android:src="@drawable/transfer_car" />
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/line"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginStart="40dp">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/car"
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
 
         <ImageView
-            android:id="@+id/line_line"
-            android:layout_width="15dp"
-            android:layout_height="50dp"
+            android:id="@+id/line_line_top"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
             android:background="@drawable/transfer_detail_line"
             android:contentDescription="@null" />
 
-        <ImageView
+        <TextView
             android:id="@+id/line_station"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginTop="10dp"
-            android:contentDescription="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/transfer_detail_station_radio" />
-
-
-        <ImageView
-            android:id="@+id/line_start"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="-2dp"
-            android:background="@drawable/transfer_detail_end"
-            android:contentDescription="@null"
-            android:scaleType="fitXY" />
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/line_station_new_icon"
+            android:gravity="center"
+            android:text="55"
+            android:textColor="#515567"
+            android:textSize="12sp" />
 
         <ImageView
-            android:id="@+id/line_end"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="-2dp"
-            android:background="@drawable/transfer_detail_end"
-            android:contentDescription="@null"
-            android:scaleType="fitXY" />
+            android:id="@+id/line_line_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="3"
+            android:background="@drawable/transfer_detail_line"
+            android:contentDescription="@null" />
 
-    </RelativeLayout>
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="70dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_toRightOf="@+id/line"
+        android:layout_marginTop="25dp"
         android:textColor="#000000"
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/time"
@@ -84,17 +79,101 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="25dp"
         android:textColor="#aaaaaa"
         android:textSize="14sp" />
 
-    <TextView
+    <View
         android:id="@+id/car_bottom_line"
-        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
-        android:layout_marginLeft="70dp"
-        android:layout_marginStart="70dp"
         android:layout_height="1dp"
-        android:background="#d2d2d2"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/name"
+        android:layout_toRightOf="@+id/line"
+        android:layout_marginTop="10dp"
+        android:background="#d2d2d2"
+        android:visibility="invisible"/>
+
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:layout_marginLeft="40dp"-->
+    <!--android:layout_marginStart="40dp">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/line_line"-->
+    <!--android:layout_width="15dp"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:background="@drawable/transfer_detail_line"-->
+    <!--android:contentDescription="@null" />-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/line_station"-->
+    <!--android:layout_width="18dp"-->
+    <!--android:layout_height="18dp"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:contentDescription="@null"-->
+    <!--android:scaleType="fitXY"-->
+    <!--android:src="@drawable/transfer_detail_station_radio" />-->
+
+
+    <!--<ImageView-->
+    <!--android:id="@+id/line_start"-->
+    <!--android:layout_width="16dp"-->
+    <!--android:layout_height="16dp"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginTop="-2dp"-->
+    <!--android:background="@drawable/transfer_detail_end"-->
+    <!--android:contentDescription="@null"-->
+    <!--android:scaleType="fitXY" />-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/line_end"-->
+    <!--android:layout_width="16dp"-->
+    <!--android:layout_height="16dp"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginBottom="-2dp"-->
+    <!--android:background="@drawable/transfer_detail_end"-->
+    <!--android:contentDescription="@null"-->
+    <!--android:scaleType="fitXY" />-->
+
+    <!--</RelativeLayout>-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/name"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_marginLeft="70dp"-->
+    <!--android:layout_marginStart="70dp"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:textColor="#000000"-->
+    <!--android:textSize="16sp" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/time"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_marginStart="10dp"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:textColor="#aaaaaa"-->
+    <!--android:textSize="14sp" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/car_bottom_line"-->
+    <!--android:layout_marginTop="40dp"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_marginLeft="70dp"-->
+    <!--android:layout_marginStart="70dp"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:background="#d2d2d2"/>-->
 
 </RelativeLayout>

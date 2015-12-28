@@ -64,47 +64,54 @@ public class LineDirectionBaseAdapter extends BaseAdapter {
             holder = new Holder();
             convertView = inflater.inflate(R.layout.activity_line_direction_item, null);
             holder.car = (ImageView) convertView.findViewById(R.id.car);
-            holder.startRadio = (ImageView) convertView.findViewById(R.id.line_start);
-            holder.middleRadio = (ImageView) convertView.findViewById(R.id.line_station);
-            holder.endRadio = (ImageView) convertView.findViewById(R.id.line_end);
+            holder.startLine = (ImageView) convertView.findViewById(R.id.line_line_top);
+            holder.middleStation = (TextView) convertView.findViewById(R.id.line_station);
+            holder.endLine = (ImageView) convertView.findViewById(R.id.line_line_bottom);
             holder.name = (TextView) convertView.findViewById(R.id.name);
             holder.time = (TextView) convertView.findViewById(R.id.time);
-            holder.carLine = (TextView) convertView.findViewById(R.id.car_bottom_line);
+            holder.carLine = convertView.findViewById(R.id.car_bottom_line);
             convertView.setTag(holder);
         } else {
             holder = (Holder) convertView.getTag();
         }
 
-        if(position == 0){
-            holder.startRadio.setVisibility(View.VISIBLE);
-            holder.middleRadio.setVisibility(View.GONE);
-            holder.endRadio.setVisibility(View.GONE);
-        }else if(position == (getCount()-1)){
-            holder.startRadio.setVisibility(View.GONE);
-            holder.middleRadio.setVisibility(View.GONE);
-            holder.endRadio.setVisibility(View.VISIBLE);
-        }else{
-            holder.startRadio.setVisibility(View.GONE);
-            holder.middleRadio.setVisibility(View.VISIBLE);
-            holder.endRadio.setVisibility(View.GONE);
-        }
-
+        holder.middleStation.setText(String.valueOf(position+1));
         holder.name.setText(item.getStr("SName"));
         String InTime = item.getStr("InTime");
         holder.time.setText(StringUtils.isNullOrNullStr(InTime) ? "": InTime);
         String BusInfo = item.getStr("BusInfo");
-        holder.car.setVisibility(StringUtils.isNullOrNullStr(BusInfo) ? View.GONE: View.VISIBLE);
-        holder.carLine.setVisibility(StringUtils.isNullOrNullStr(BusInfo) ? View.GONE: View.VISIBLE);
+        holder.car.setVisibility(StringUtils.isNullOrNullStr(BusInfo) ? View.INVISIBLE: View.VISIBLE);
+        holder.carLine.setVisibility(StringUtils.isNullOrNullStr(BusInfo) ? View.INVISIBLE: View.VISIBLE);
+
+        if(position == 0){
+            holder.startLine.setVisibility(View.INVISIBLE);
+            holder.endLine.setVisibility(View.VISIBLE);
+            holder.time.setVisibility(View.VISIBLE);
+            holder.middleStation.setBackgroundResource(R.drawable.line_station_end_new_icon);
+        }else if(position == (getCount()-1)){
+            holder.middleStation.setBackgroundResource(R.drawable.line_station_end_new_icon);
+            holder.startLine.setVisibility(View.VISIBLE);
+            holder.endLine.setVisibility(View.INVISIBLE);
+            holder.car.setVisibility(View.INVISIBLE);
+            holder.carLine.setVisibility(View.INVISIBLE);
+            holder.time.setVisibility(View.INVISIBLE);
+        }else{
+            holder.middleStation.setBackgroundResource(R.drawable.line_station_new_icon);
+            holder.startLine.setVisibility(View.VISIBLE);
+            holder.endLine.setVisibility(View.VISIBLE);
+            holder.time.setVisibility(View.VISIBLE);
+        }
+
         return convertView;
     }
 
     private class Holder {
         ImageView car;
-        ImageView startRadio;
-        ImageView middleRadio;
-        ImageView endRadio;
+        ImageView startLine;
+        TextView middleStation;
+        ImageView endLine;
         TextView name;
         TextView time;
-        TextView carLine;
+        View carLine;
     }
 }
