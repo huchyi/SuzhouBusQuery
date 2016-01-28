@@ -9,7 +9,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingStart="10dp"
-    android:paddingTop="30dp">
+    android:paddingTop="10dp">
 
     <RelativeLayout
         android:id="@+id/input_ll"
