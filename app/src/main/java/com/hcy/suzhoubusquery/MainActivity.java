@@ -64,67 +64,44 @@ public class MainActivity extends FragmentActivity {
      */
     private ImageView todayTempIconIV;
     private TextView todayTempWeatherTV;
-//    private TextView todayTempTemperatureer;
-//    private TextView todayTempDateTV;
     private TextView todayTempWindTV;
-//    private TextView todayTempWindToTV;
     private TextView todayTempUpdatetimeTV;
     private LinearLayout toRefreshLL;
     private ImageView rfreshIV;
 
-
     private ImageView temp2IconIV;
     private TextView temp2WeatherTV;
-    private TextView temp2Temperatureer;
-    private TextView temp2DateTV;
 
     private ImageView temp3IconIV;
     private TextView temp3WeatherTV;
-    private TextView temp3Temperatureer;
-    private TextView temp3DateTV;
 
     private ImageView temp4IconIV;
     private TextView temp4WeatherTV;
-    private TextView temp4Temperatureer;
-    private TextView temp4DateTV;
 
     private ImageView temp5IconIV;
     private TextView temp5WeatherTV;
-    private TextView temp5Temperatureer;
-    private TextView temp5DateTV;
 
     private boolean isRefresh = false;
 
     private void initView() {
         todayTempIconIV = (ImageView) findViewById(R.id.temp_today_icon);
         todayTempWeatherTV = (TextView) findViewById(R.id.temp_today_weather_tv);
-//        todayTempTemperatureer = (TextView) findViewById(R.id.temp_today_temperature_tv);
-//        todayTempDateTV = (TextView) findViewById(R.id.temp_today_date_tv);
         todayTempWindTV = (TextView) findViewById(R.id.temp_today_wind_tv);
-//        todayTempWindToTV = (TextView) findViewById(R.id.temp_today_wind_strong_tv);
         todayTempUpdatetimeTV = (TextView) findViewById(R.id.temp_today_wind_updatetime_tv);
         toRefreshLL = (LinearLayout) findViewById(R.id.temp_refresh);
         rfreshIV = (ImageView) findViewById(R.id.temp_refresh_icon);
 
         temp2IconIV = (ImageView) findViewById(R.id.temp2_today_icon);
         temp2WeatherTV = (TextView) findViewById(R.id.temp2_today_weather_tv);
-        temp2Temperatureer = (TextView) findViewById(R.id.temp2_today_temperature_tv);
-        temp2DateTV = (TextView) findViewById(R.id.temp2_today_date_tv);
 
         temp3IconIV = (ImageView) findViewById(R.id.temp3_today_icon);
         temp3WeatherTV = (TextView) findViewById(R.id.temp3_today_weather_tv);
-        temp3Temperatureer = (TextView) findViewById(R.id.temp3_today_temperature_tv);
-        temp3DateTV = (TextView) findViewById(R.id.temp3_today_date_tv);
 
         temp4IconIV = (ImageView) findViewById(R.id.temp4_today_icon);
         temp4WeatherTV = (TextView) findViewById(R.id.temp4_today_weather_tv);
-        temp4Temperatureer = (TextView) findViewById(R.id.temp4_today_temperature_tv);
-        temp4DateTV = (TextView) findViewById(R.id.temp4_today_date_tv);
 
         temp5IconIV = (ImageView) findViewById(R.id.temp5_today_icon);
         temp5WeatherTV = (TextView) findViewById(R.id.temp5_today_weather_tv);
-        temp5Temperatureer = (TextView) findViewById(R.id.temp5_today_temperature_tv);
-        temp5DateTV = (TextView) findViewById(R.id.temp5_today_date_tv);
 
         toRefreshLL.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,10 +153,7 @@ public class MainActivity extends FragmentActivity {
             try {
                 todayTempIconIV.setImageResource(WeatherUtils.getWhiteCatIconIdByTypeName(beanTodaty.getStr("weather")));
                 todayTempWeatherTV.setText(beanTodaty.getStr("weather") + "\n " + beanTodaty.getStr("temp")  + "°C" + "\n" + "今天");
-//                todayTempTemperatureer.setText();
-//                todayTempDateTV.setText();
                 todayTempWindTV.setText(beanTodaty.getStr("WS") + "\n" + beanTodaty.getStr("WD"));
-//                todayTempWindToTV.setText();
                 todayTempUpdatetimeTV.setText(beanTodaty.getStr("time") +"更新");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -194,10 +168,7 @@ public class MainActivity extends FragmentActivity {
             try {
                 todayTempIconIV.setImageResource(WeatherUtils.getWhiteCatIconIdByTypeName(beanTodaty.getStr("weather")));
                 todayTempWeatherTV.setText(beanTodaty.getStr("weather") + "\n " + beanTodaty.getStr("temp")  + "°C" + "\n" + "今天");
-//                todayTempTemperatureer.setText();
-//                todayTempDateTV.setText();
                 todayTempWindTV.setText(beanTodaty.getStr("WS") + "\n" + beanTodaty.getStr("WD"));
-//                todayTempWindToTV.setText();
                 todayTempUpdatetimeTV.setText(beanTodaty.getStr("time") +"更新");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -209,24 +180,24 @@ public class MainActivity extends FragmentActivity {
         if (beanFeature != null) {
             try {
                 temp2IconIV.setImageResource(WeatherUtils.getWhiteIconIdByTypeName(beanFeature.getStr("weather2")));
-                temp2WeatherTV.setText(beanFeature.getStr("weather2"));
-                temp2Temperatureer.setText(tempReset(beanFeature.getStr("temp2")));
-                temp2DateTV.setText("明天");
+                temp2WeatherTV.setText(beanFeature.getStr("weather2")
+                                         +"\n" + tempReset(beanFeature.getStr("temp2"))
+                                         +"\n" + "明天");
 
                 temp3IconIV.setImageResource(WeatherUtils.getWhiteIconIdByTypeName(beanFeature.getStr("weather3")));
-                temp3WeatherTV.setText(beanFeature.getStr("weather3"));
-                temp3Temperatureer.setText(tempReset(beanFeature.getStr("temp3")));
-                temp3DateTV.setText("后天");
+                temp3WeatherTV.setText(beanFeature.getStr("weather3")
+                        +"\n" + tempReset(beanFeature.getStr("temp3"))
+                        +"\n" + "后天");
 
                 temp4IconIV.setImageResource(WeatherUtils.getWhiteIconIdByTypeName(beanFeature.getStr("weather4")));
-                temp4WeatherTV.setText(beanFeature.getStr("weather4"));
-                temp4Temperatureer.setText(tempReset(beanFeature.getStr("temp4")));
-                temp4DateTV.setText(weekDateReset(3));
+                temp4WeatherTV.setText(beanFeature.getStr("weather4")
+                        +"\n" + tempReset(beanFeature.getStr("temp4"))
+                        +"\n" + weekDateReset(3));
 
                 temp5IconIV.setImageResource(WeatherUtils.getWhiteIconIdByTypeName(beanFeature.getStr("weather5")));
-                temp5WeatherTV.setText(beanFeature.getStr("weather5"));
-                temp5Temperatureer.setText(tempReset(beanFeature.getStr("temp5")));
-                temp5DateTV.setText(weekDateReset(4));
+                temp5WeatherTV.setText(beanFeature.getStr("weather5")
+                        +"\n" + tempReset(beanFeature.getStr("temp5"))
+                        +"\n" + weekDateReset(4));
             } catch (NullPointerException e) {
                 e.printStackTrace();
             }
