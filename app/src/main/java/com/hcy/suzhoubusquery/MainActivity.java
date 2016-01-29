@@ -1,6 +1,5 @@
 package com.hcy.suzhoubusquery;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,17 +7,30 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.hcy.suzhoubusquery.utils.LineNumInfoPreferenceUtil;
+import com.hcy.suzhoubusquery.net.HttpRequest;
+import com.hcy.suzhoubusquery.temp.WeatherUtils;
+import com.hcy.suzhoubusquery.utils.BaseBean;
 import com.hcy.suzhoubusquery.utils.MethodUtils;
 import com.hcy.suzhoubusquery.utils.PagerSlidingTabStrip;
-import com.hcy.suzhoubusquery.view.CustomDialog;
+import com.hcy.suzhoubusquery.utils.StringUtils;
+
+import org.json.JSONObject;
+
+import java.util.Calendar;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends FragmentActivity {
 
     public static String SERVER_FILE = MyApplication.getInstances().getString(R.string.method_service);// 域名
+
+    public static String SERVER_FILE_TEMP = MyApplication.getInstances().getString(R.string.method_service_temp);// id:101190401
 
     public static String DEVICE_ID;
 
@@ -43,8 +55,226 @@ public class MainActivity extends FragmentActivity {
         pagers.setAdapter(pagerAdapter);
         pagers.setOffscreenPageLimit(2);
         tabs.setViewPager(pagers);
-
+        initView();
     }
+
+
+    /**
+     * 天气开始
+     */
+    private ImageView todayTempIconIV;
+    private TextView todayTempWeatherTV;
+//    private TextView todayTempTemperatureer;
+//    private TextView todayTempDateTV;
+    private TextView todayTempWindTV;
+//    private TextView todayTempWindToTV;
+    private TextView todayTempUpdatetimeTV;
+    private LinearLayout toRefreshLL;
+    private ImageView rfreshIV;
+
+
+    private ImageView temp2IconIV;
+    private TextView temp2WeatherTV;
+    private TextView temp2Temperatureer;
+    private TextView temp2DateTV;
+
+    private ImageView temp3IconIV;
+    private TextView temp3WeatherTV;
+    private TextView temp3Temperatureer;
+    private TextView temp3DateTV;
+
+    private ImageView temp4IconIV;
+    private TextView temp4WeatherTV;
+    private TextView temp4Temperatureer;
+    private TextView temp4DateTV;
+
+    private ImageView temp5IconIV;
+    private TextView temp5WeatherTV;
+    private TextView temp5Temperatureer;
+    private TextView temp5DateTV;
+
+    private boolean isRefresh = false;
+
+    private void initView() {
+        todayTempIconIV = (ImageView) findViewById(R.id.temp_today_icon);
+        todayTempWeatherTV = (TextView) findViewById(R.id.temp_today_weather_tv);
+//        todayTempTemperatureer = (TextView) findViewById(R.id.temp_today_temperature_tv);
+//        todayTempDateTV = (TextView) findViewById(R.id.temp_today_date_tv);
+        todayTempWindTV = (TextView) findViewById(R.id.temp_today_wind_tv);
+//        todayTempWindToTV = (TextView) findViewById(R.id.temp_today_wind_strong_tv);
+        todayTempUpdatetimeTV = (TextView) findViewById(R.id.temp_today_wind_updatetime_tv);
+        toRefreshLL = (LinearLayout) findViewById(R.id.temp_refresh);
+        rfreshIV = (ImageView) findViewById(R.id.temp_refresh_icon);
+
+        temp2IconIV = (ImageView) findViewById(R.id.temp2_today_icon);
+        temp2WeatherTV = (TextView) findViewById(R.id.temp2_today_weather_tv);
+        temp2Temperatureer = (TextView) findViewById(R.id.temp2_today_temperature_tv);
+        temp2DateTV = (TextView) findViewById(R.id.temp2_today_date_tv);
+
+        temp3IconIV = (ImageView) findViewById(R.id.temp3_today_icon);
+        temp3WeatherTV = (TextView) findViewById(R.id.temp3_today_weather_tv);
+        temp3Temperatureer = (TextView) findViewById(R.id.temp3_today_temperature_tv);
+        temp3DateTV = (TextView) findViewById(R.id.temp3_today_date_tv);
+
+        temp4IconIV = (ImageView) findViewById(R.id.temp4_today_icon);
+        temp4WeatherTV = (TextView) findViewById(R.id.temp4_today_weather_tv);
+        temp4Temperatureer = (TextView) findViewById(R.id.temp4_today_temperature_tv);
+        temp4DateTV = (TextView) findViewById(R.id.temp4_today_date_tv);
+
+        temp5IconIV = (ImageView) findViewById(R.id.temp5_today_icon);
+        temp5WeatherTV = (TextView) findViewById(R.id.temp5_today_weather_tv);
+        temp5Temperatureer = (TextView) findViewById(R.id.temp5_today_temperature_tv);
+        temp5DateTV = (TextView) findViewById(R.id.temp5_today_date_tv);
+
+        toRefreshLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RotateAnimation ra = new RotateAnimation(0, 720, rfreshIV.getWidth() / 2, rfreshIV.getHeight() / 2);
+                ra.setDuration(2000);
+                rfreshIV.startAnimation(ra);
+                isRefresh = true;
+                initData();
+            }
+        });
+        initData();
+    }
+
+    private void initData() {
+        HttpRequest.getInstances().getTempDate(new HttpRequest.ICallBack() {
+            @Override
+            public void onSuccess(final String json) {
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            BaseBean bean = new BaseBean(new JSONObject(json));
+                            if(isRefresh){
+                                isRefresh = false;
+                                showRefreshData(bean);
+                            }else{
+                                showData(bean);
+                            }
+                        } catch (Exception e) {
+                            isRefresh = false;
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                isRefresh = false;
+            }
+        });
+    }
+
+    private void showRefreshData(BaseBean baseBean) {
+        //now
+        BaseBean beanTodaty = (BaseBean) baseBean.get("realtime");
+        if (beanTodaty != null) {
+            try {
+                todayTempIconIV.setImageResource(WeatherUtils.getWhiteCatIconIdByTypeName(beanTodaty.getStr("weather")));
+                todayTempWeatherTV.setText(beanTodaty.getStr("weather") + "\n " + beanTodaty.getStr("temp")  + "°C" + "\n" + "今天");
+//                todayTempTemperatureer.setText();
+//                todayTempDateTV.setText();
+                todayTempWindTV.setText(beanTodaty.getStr("WS") + "\n" + beanTodaty.getStr("WD"));
+//                todayTempWindToTV.setText();
+                todayTempUpdatetimeTV.setText(beanTodaty.getStr("time") +"更新");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void showData(BaseBean baseBean) {
+        //now
+        BaseBean beanTodaty = (BaseBean) baseBean.get("realtime");
+        if (beanTodaty != null) {
+            try {
+                todayTempIconIV.setImageResource(WeatherUtils.getWhiteCatIconIdByTypeName(beanTodaty.getStr("weather")));
+                todayTempWeatherTV.setText(beanTodaty.getStr("weather") + "\n " + beanTodaty.getStr("temp")  + "°C" + "\n" + "今天");
+//                todayTempTemperatureer.setText();
+//                todayTempDateTV.setText();
+                todayTempWindTV.setText(beanTodaty.getStr("WS") + "\n" + beanTodaty.getStr("WD"));
+//                todayTempWindToTV.setText();
+                todayTempUpdatetimeTV.setText(beanTodaty.getStr("time") +"更新");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        //feature
+        BaseBean beanFeature = (BaseBean) baseBean.get("forecast");
+        if (beanFeature != null) {
+            try {
+                temp2IconIV.setImageResource(WeatherUtils.getWhiteIconIdByTypeName(beanFeature.getStr("weather2")));
+                temp2WeatherTV.setText(beanFeature.getStr("weather2"));
+                temp2Temperatureer.setText(tempReset(beanFeature.getStr("temp2")));
+                temp2DateTV.setText("明天");
+
+                temp3IconIV.setImageResource(WeatherUtils.getWhiteIconIdByTypeName(beanFeature.getStr("weather3")));
+                temp3WeatherTV.setText(beanFeature.getStr("weather3"));
+                temp3Temperatureer.setText(tempReset(beanFeature.getStr("temp3")));
+                temp3DateTV.setText("后天");
+
+                temp4IconIV.setImageResource(WeatherUtils.getWhiteIconIdByTypeName(beanFeature.getStr("weather4")));
+                temp4WeatherTV.setText(beanFeature.getStr("weather4"));
+                temp4Temperatureer.setText(tempReset(beanFeature.getStr("temp4")));
+                temp4DateTV.setText(weekDateReset(3));
+
+                temp5IconIV.setImageResource(WeatherUtils.getWhiteIconIdByTypeName(beanFeature.getStr("weather5")));
+                temp5WeatherTV.setText(beanFeature.getStr("weather5"));
+                temp5Temperatureer.setText(tempReset(beanFeature.getStr("temp5")));
+                temp5DateTV.setText(weekDateReset(4));
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    private String tempReset(String temp){
+        if(!StringUtils.isNullOrNullStr(temp)){
+            if(temp.contains("~")){
+                String[] temps = temp.split("~");
+                if(temps.length > 1){
+                    temp =temps[1] + "~"+ temps[0];
+                }
+            }
+            return temp;
+        }
+        return "";
+    }
+
+    private String weekDateReset(int time) {
+        Calendar c = Calendar.getInstance();
+        int way = c.get(Calendar.DAY_OF_WEEK);
+        way = way + time;
+        way  = way > 7? way - 7 : way;
+        String mWay = String.valueOf(way);
+        if ("1".equals(mWay)) {
+            mWay = "天";
+        } else if ("2".equals(mWay)) {
+            mWay = "一";
+        } else if ("3".equals(mWay)) {
+            mWay = "二";
+        } else if ("4".equals(mWay)) {
+            mWay = "三";
+        } else if ("5".equals(mWay)) {
+            mWay = "四";
+        } else if ("6".equals(mWay)) {
+            mWay = "五";
+        } else if ("7".equals(mWay)) {
+            mWay = "六";
+        }
+        return "星期" + mWay;
+    }
+
+
+    /**
+     * 天气结束
+     */
 
     public class MyStoryPagerAdapter extends FragmentStatePagerAdapter {
         FragmentManager fm;
@@ -91,8 +321,8 @@ public class MainActivity extends FragmentActivity {
 
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event){
-        if (keyCode == KeyEvent.KEYCODE_BACK ){
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
 //            CustomDialog.Builder builder = new CustomDialog.Builder(this);
 //            builder.setTitle("提示");
 //            builder.setMessage("确定退出吗?");

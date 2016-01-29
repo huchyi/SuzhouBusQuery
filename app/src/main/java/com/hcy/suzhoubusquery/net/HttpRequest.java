@@ -6,6 +6,7 @@ import android.util.Log;
 import com.hcy.suzhoubusquery.MainActivity;
 import com.hcy.suzhoubusquery.MyApplication;
 import com.hcy.suzhoubusquery.utils.MethodUtils;
+import com.hcy.suzhoubusquery.utils.StringUtils;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -176,5 +177,31 @@ public class HttpRequest {
             callBack.onFailure("站台名的编号为空");
         }
     }
+
+
+    /**
+     * 得到天气的信息
+     **/
+    public void getTempDate(final ICallBack callBack) {
+            String urlStr = MainActivity.SERVER_FILE_TEMP + "101190401";
+            request = new Request.Builder().url(urlStr).build();
+            mOkHttpClient.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+                    callBack.onFailure("");
+                }
+
+                @Override
+                public void onResponse(final Response response) throws IOException {
+                    String htmlStr = response.body().string();
+                    if(StringUtils.isNullOrNullStr(htmlStr)){
+                        callBack.onFailure("");
+                    }else{
+                        callBack.onSuccess(htmlStr);
+                    }
+                }
+            });
+    }
+
 
 }

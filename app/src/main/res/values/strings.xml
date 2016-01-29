@@ -6,8 +6,9 @@
 
     <string name="please_check_newwork">请检查网络连接</string>
 
-
     <string name="method_service">http://content.2500city.com</string>
+
+    <string name="method_service_temp">http://weatherapi.market.xiaomi.com/wtr-v2/weather?cityId=</string>
 
 
     <string name="pull_to_refresh">下拉可以刷新</string>
