@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.hcy.suzhoubusquery"
@@ -17,7 +17,74 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
+
+    signingConfigs {
+//        debug {
+//            // No debug config
+//            storeFile file("engineerdaddy.keystore")
+//            storePassword "appshare123"
+//            keyAlias "engineerdaddy.keystore"
+//            keyPassword "appshare123"
+//        }
+
+        release {
+            storeFile file("engineerdaddy.keystore")
+            storePassword ""
+            keyAlias "engineerdaddy.keystore"
+            keyPassword ""
+        }
+    }
+
+    buildTypes {
+//        debug {
+//
+//            minifyEnabled false
+//            zipAlignEnabled false
+//            shrinkResources false
+//            signingConfig signingConfigs.debug
+//        }
+
+        release {
+
+            minifyEnabled true
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        def fileName = "suzhoubus_${defaultConfig.versionName}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+    }
+
+//   ./gradlew assembleRelease   命令行输入即可打release包
+//   ./gradlew assemblexiaomiRelease   命令行输入即可打xiaomi的release包
+    productFlavors {
+        xiaomi {}
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+
 }
+
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
