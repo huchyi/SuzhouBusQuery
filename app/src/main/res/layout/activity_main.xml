@@ -3,8 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffffff"
+    android:background="#efefef"
     tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/temp_open_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_temp_btn"
+        android:padding="3dp"
+        android:text="查看天气"
+        android:textColor="#30CAD2" />
 
 
     <RelativeLayout
@@ -12,7 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#efefef"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/title"
@@ -95,6 +108,18 @@
         <!--  temp   start  -->
         <include layout="@layout/temp_layout" />
         <!--  temp   end  -->
+
+        <TextView
+            android:id="@+id/temp_close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_temp_btn"
+            android:padding="3dp"
+            android:text="关闭天气"
+            android:textColor="#30CAD2" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -125,6 +150,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/layout_tabs_rl"
         android:layout_below="@+id/title_rl_top"
+        android:layout_marginTop="35dp"
         android:background="#ffffff" />
 
     <ProgressBar

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hcy.suzhoubusquery.net.HttpRequest;
@@ -81,9 +82,32 @@ public class MainActivity extends FragmentActivity {
     private ImageView temp5IconIV;
     private TextView temp5WeatherTV;
 
+
+    private TextView mOpenTempTV;
+    private TextView mCloseTempTV;
+    private RelativeLayout mTempZoneRL;
+
+
     private boolean isRefresh = false;
 
     private void initView() {
+        mOpenTempTV = (TextView) findViewById(R.id.temp_open_btn);
+        mOpenTempTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTempZoneRL.setVisibility(View.VISIBLE);
+            }
+        });
+        mCloseTempTV = (TextView) findViewById(R.id.temp_close_btn);
+        mCloseTempTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTempZoneRL.setVisibility(View.GONE);
+            }
+        });
+        mTempZoneRL = (RelativeLayout) findViewById(R.id.title_rl_top);
+
+
         todayTempIconIV = (ImageView) findViewById(R.id.temp_today_icon);
         todayTempWeatherTV = (TextView) findViewById(R.id.temp_today_weather_tv);
         todayTempWindTV = (TextView) findViewById(R.id.temp_today_wind_tv);
@@ -125,10 +149,10 @@ public class MainActivity extends FragmentActivity {
                     public void run() {
                         try {
                             BaseBean bean = new BaseBean(new JSONObject(json));
-                            if(isRefresh){
+                            if (isRefresh) {
                                 isRefresh = false;
                                 showRefreshData(bean);
-                            }else{
+                            } else {
                                 showData(bean);
                             }
                         } catch (Exception e) {
@@ -152,9 +176,9 @@ public class MainActivity extends FragmentActivity {
         if (beanTodaty != null) {
             try {
                 todayTempIconIV.setImageResource(WeatherUtils.getWhiteCatIconIdByTypeName(beanTodaty.getStr("weather")));
-                todayTempWeatherTV.setText(beanTodaty.getStr("weather") + "\n " + beanTodaty.getStr("temp")  + "°C" + "\n" + "今天");
+                todayTempWeatherTV.setText(beanTodaty.getStr("weather") + "\n " + beanTodaty.getStr("temp") + "°C" + "\n" + "今天");
                 todayTempWindTV.setText(beanTodaty.getStr("WS") + "\n" + beanTodaty.getStr("WD"));
-                todayTempUpdatetimeTV.setText(beanTodaty.getStr("time") +"更新");
+                todayTempUpdatetimeTV.setText(beanTodaty.getStr("time") + "更新");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -167,9 +191,9 @@ public class MainActivity extends FragmentActivity {
         if (beanTodaty != null) {
             try {
                 todayTempIconIV.setImageResource(WeatherUtils.getWhiteCatIconIdByTypeName(beanTodaty.getStr("weather")));
-                todayTempWeatherTV.setText(beanTodaty.getStr("weather") + "\n " + beanTodaty.getStr("temp")  + "°C" + "\n" + "今天");
+                todayTempWeatherTV.setText(beanTodaty.getStr("weather") + "\n " + beanTodaty.getStr("temp") + "°C" + "\n" + "今天");
                 todayTempWindTV.setText(beanTodaty.getStr("WS") + "\n" + beanTodaty.getStr("WD"));
-                todayTempUpdatetimeTV.setText(beanTodaty.getStr("time") +"更新");
+                todayTempUpdatetimeTV.setText(beanTodaty.getStr("time") + "更新");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -181,23 +205,23 @@ public class MainActivity extends FragmentActivity {
             try {
                 temp2IconIV.setImageResource(WeatherUtils.getWhiteIconIdByTypeName(beanFeature.getStr("weather2")));
                 temp2WeatherTV.setText(beanFeature.getStr("weather2")
-                                         +"\n" + tempReset(beanFeature.getStr("temp2"))
-                                         +"\n" + "明天");
+                        + "\n" + tempReset(beanFeature.getStr("temp2"))
+                        + "\n" + "明天");
 
                 temp3IconIV.setImageResource(WeatherUtils.getWhiteIconIdByTypeName(beanFeature.getStr("weather3")));
                 temp3WeatherTV.setText(beanFeature.getStr("weather3")
-                        +"\n" + tempReset(beanFeature.getStr("temp3"))
-                        +"\n" + "后天");
+                        + "\n" + tempReset(beanFeature.getStr("temp3"))
+                        + "\n" + "后天");
 
                 temp4IconIV.setImageResource(WeatherUtils.getWhiteIconIdByTypeName(beanFeature.getStr("weather4")));
                 temp4WeatherTV.setText(beanFeature.getStr("weather4")
-                        +"\n" + tempReset(beanFeature.getStr("temp4"))
-                        +"\n" + weekDateReset(3));
+                        + "\n" + tempReset(beanFeature.getStr("temp4"))
+                        + "\n" + weekDateReset(3));
 
                 temp5IconIV.setImageResource(WeatherUtils.getWhiteIconIdByTypeName(beanFeature.getStr("weather5")));
                 temp5WeatherTV.setText(beanFeature.getStr("weather5")
-                        +"\n" + tempReset(beanFeature.getStr("temp5"))
-                        +"\n" + weekDateReset(4));
+                        + "\n" + tempReset(beanFeature.getStr("temp5"))
+                        + "\n" + weekDateReset(4));
             } catch (NullPointerException e) {
                 e.printStackTrace();
             }
@@ -205,12 +229,12 @@ public class MainActivity extends FragmentActivity {
     }
 
 
-    private String tempReset(String temp){
-        if(!StringUtils.isNullOrNullStr(temp)){
-            if(temp.contains("~")){
+    private String tempReset(String temp) {
+        if (!StringUtils.isNullOrNullStr(temp)) {
+            if (temp.contains("~")) {
                 String[] temps = temp.split("~");
-                if(temps.length > 1){
-                    temp =temps[1] + "~"+ temps[0];
+                if (temps.length > 1) {
+                    temp = temps[1] + "~" + temps[0];
                 }
             }
             return temp;
@@ -222,7 +246,7 @@ public class MainActivity extends FragmentActivity {
         Calendar c = Calendar.getInstance();
         int way = c.get(Calendar.DAY_OF_WEEK);
         way = way + time;
-        way  = way > 7? way - 7 : way;
+        way = way > 7 ? way - 7 : way;
         String mWay = String.valueOf(way);
         if ("1".equals(mWay)) {
             mWay = "天";
