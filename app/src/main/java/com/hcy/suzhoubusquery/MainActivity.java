@@ -67,7 +67,7 @@ public class MainActivity extends FragmentActivity {
     private TextView todayTempWeatherTV;
     private TextView todayTempWindTV;
     private TextView todayTempUpdatetimeTV;
-    private LinearLayout toRefreshLL;
+    private RelativeLayout toRefreshLL;
     private ImageView rfreshIV;
 
     private ImageView temp2IconIV;
@@ -112,7 +112,7 @@ public class MainActivity extends FragmentActivity {
         todayTempWeatherTV = (TextView) findViewById(R.id.temp_today_weather_tv);
         todayTempWindTV = (TextView) findViewById(R.id.temp_today_wind_tv);
         todayTempUpdatetimeTV = (TextView) findViewById(R.id.temp_today_wind_updatetime_tv);
-        toRefreshLL = (LinearLayout) findViewById(R.id.temp_refresh);
+        toRefreshLL = (RelativeLayout) findViewById(R.id.temp_refresh);
         rfreshIV = (ImageView) findViewById(R.id.temp_refresh_icon);
 
         temp2IconIV = (ImageView) findViewById(R.id.temp2_today_icon);

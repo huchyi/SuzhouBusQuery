@@ -27,18 +27,18 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#efefef"
-            android:gravity="center"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/temp_today_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="5dp"
@@ -50,6 +50,9 @@
                 android:id="@+id/temp_today_weather_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/temp_today_icon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:text="晴"
                 android:textColor="@color/black"
@@ -62,34 +65,26 @@
                 android:gravity="center"
                 android:text="1级\n西北风"
                 android:textColor="@color/black"
-                android:textSize="10dp" />
-
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="20dp"
-                android:contentDescription="@null"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_sun"
+                android:textSize="10dp"
                 android:visibility="gone" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/temp_refresh"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:background="#efefef"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <ImageView
                     android:id="@+id/temp_refresh_icon"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
                     android:contentDescription="@null"
                     android:scaleType="centerCrop"
                     android:src="@drawable/refresh" />
@@ -98,13 +93,16 @@
                     android:id="@+id/temp_today_wind_updatetime_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/temp_refresh_icon"
+                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
                     android:text="12:36更新"
                     android:textColor="#545454"
                     android:textSize="10dp" />
 
-            </LinearLayout>
-        </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
         <!--  temp   start  -->
         <include layout="@layout/temp_layout" />
         <!--  temp   end  -->
