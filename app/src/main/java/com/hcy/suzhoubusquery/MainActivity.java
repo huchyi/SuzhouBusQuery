@@ -176,7 +176,7 @@ public class MainActivity extends FragmentActivity {
         if (beanTodaty != null) {
             try {
                 todayTempIconIV.setImageResource(WeatherUtils.getWhiteCatIconIdByTypeName(beanTodaty.getStr("weather")));
-                todayTempWeatherTV.setText(beanTodaty.getStr("weather") + "\n " + beanTodaty.getStr("temp") + "°C" + "\n" + "今天");
+                todayTempWeatherTV.setText("今天 [ " + beanTodaty.getStr("weather") + " ] [ " + beanTodaty.getStr("temp") + "°C ]" );
                 todayTempWindTV.setText(beanTodaty.getStr("WS") + "\n" + beanTodaty.getStr("WD"));
                 todayTempUpdatetimeTV.setText(beanTodaty.getStr("time") + "更新");
             } catch (Exception e) {
@@ -191,7 +191,7 @@ public class MainActivity extends FragmentActivity {
         if (beanTodaty != null) {
             try {
                 todayTempIconIV.setImageResource(WeatherUtils.getWhiteCatIconIdByTypeName(beanTodaty.getStr("weather")));
-                todayTempWeatherTV.setText(beanTodaty.getStr("weather") + "\n " + beanTodaty.getStr("temp") + "°C" + "\n" + "今天");
+                todayTempWeatherTV.setText("今天 [ " + beanTodaty.getStr("weather") + " ] [ " + beanTodaty.getStr("temp") + "°C ]");
                 todayTempWindTV.setText(beanTodaty.getStr("WS") + "\n" + beanTodaty.getStr("WD"));
                 todayTempUpdatetimeTV.setText(beanTodaty.getStr("time") + "更新");
             } catch (Exception e) {
