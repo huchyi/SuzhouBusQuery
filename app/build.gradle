@@ -31,9 +31,9 @@ android {
 
         release {
             storeFile file("engineerdaddy.keystore")
-            storePassword ""
+            storePassword "appshare123"
             keyAlias "engineerdaddy.keystore"
-            keyPassword ""
+            keyPassword "appshare123"
         }
     }
 
