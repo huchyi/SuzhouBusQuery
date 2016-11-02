@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -267,7 +268,8 @@ public class MainLineNumFragment extends Fragment implements View.OnClickListene
                         try {
                             BaseBean bean = new BaseBean(new JSONObject(json));
                             if (0 == bean.getInt("errorCode")) {
-                                ArrayList<BaseBean> beas = (ArrayList<BaseBean>) bean.get("list");
+                                BaseBean b = (BaseBean) bean.get("data");
+                                ArrayList<BaseBean> beas = (ArrayList<BaseBean>) b.get("list");
                                 if (beas != null) {
                                     mSearchContentLL.setVisibility(View.VISIBLE);
                                     mLineNumBaseAdapter = new LineNumBaseAdapter(getActivity(), beas);

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -116,7 +117,6 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onSuccess(final String json) {
-
                 LineDirectionActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -128,7 +128,7 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
                         try {
                             BaseBean bean = new BaseBean(new JSONObject(json));
                             if (0 == bean.getInt("errorCode")) {
-                                BaseBean bean1 = (BaseBean) bean.get("list");
+                                BaseBean bean1 = (BaseBean) bean.get("data");
                                 if (bean1 != null) {
                                     lineNumTV.setText(bean1.getStr("LName"));
                                     toWhereTV.setText(bean1.getStr("LDirection"));

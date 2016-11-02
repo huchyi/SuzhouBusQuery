@@ -46,7 +46,7 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
     private ArrayList<BaseBean> mBeans = new ArrayList<>();
     private StationDetailBaseAdapter mStationDetailBaseAdapter;
 
-    private Handler handler= new Handler();
+    private Handler handler = new Handler();
 
     public static void startActivity(Context context, String name, String id) {
         MyApplication.getInstances().checkActivity((Activity) context);
@@ -88,11 +88,12 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
         super.onDestroy();
     }
 
-    private void initData(){
+    private void initData() {
         mStationTV.setText(mName);
     }
 
     int a;
+
     private void getData() {
         switch (a) {
             case 101:
@@ -117,7 +118,7 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
             MyApplication.getInstances().showToast("查询失败");
             return;
         }
-        if(!isToRefresh || isAutoRefresh){
+        if (!isToRefresh || isAutoRefresh) {
             isAutoRefresh = false;
             mProgressBar.setVisibility(View.VISIBLE);
         }
@@ -128,14 +129,15 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public void run() {
                         mProgressBar.setVisibility(View.GONE);
-                        if(isToRefresh){
+                        if (isToRefresh) {
                             isToRefresh = false;
                             mRefreshableView.finishRefreshing();
                         }
                         try {
                             BaseBean bean = new BaseBean(new JSONObject(json));
                             if (0 == bean.getInt("errorCode")) {
-                                ArrayList<BaseBean> beans = (ArrayList<BaseBean>) bean.get("list");
+                                BaseBean b = (BaseBean) bean.get("data");
+                                ArrayList<BaseBean> beans = (ArrayList<BaseBean>) b.get("list");
                                 if (beans != null) {
                                     if (mStationDetailBaseAdapter == null) {
                                         mBeans = beans;
@@ -146,7 +148,7 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
                                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                                 BaseBean bean = (BaseBean) parent.getAdapter().getItem(position);
                                                 if (bean != null) {
-                                                    LineDirectionActivity.startActivity(StationDetailActivity.this,bean.getStr("Guid"));
+                                                    LineDirectionActivity.startActivity(StationDetailActivity.this, bean.getStr("Guid"));
                                                 }
                                             }
                                         });
@@ -173,7 +175,7 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public void run() {
                         mProgressBar.setVisibility(View.GONE);
-                        if(isToRefresh){
+                        if (isToRefresh) {
                             isToRefresh = false;
                             mRefreshableView.finishRefreshing();
                         }
@@ -203,7 +205,7 @@ public class StationDetailActivity extends BaseActivity implements View.OnClickL
         getData();
     }
 
-   private Runnable runnable=new Runnable() {
+    private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             isAutoRefresh = true;

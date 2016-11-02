@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -248,7 +249,8 @@ public class MainStationFragment extends Fragment implements View.OnClickListene
                         try {
                             BaseBean bean = new BaseBean(new JSONObject(json));
                             if (0 == bean.getInt("errorCode")) {
-                                ArrayList<BaseBean> beans = (ArrayList<BaseBean>) bean.get("list");
+                                BaseBean b = (BaseBean) bean.get("data");
+                                ArrayList<BaseBean> beans = (ArrayList<BaseBean>) b.get("list");
                                 if (beans != null) {
                                     mSearchContentLL.setVisibility(View.VISIBLE);
                                     mStationBaseAdapter = new StationBaseAdapter(getActivity(), beans);

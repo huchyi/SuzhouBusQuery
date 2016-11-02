@@ -16,9 +16,8 @@ import java.io.IOException;
 
 /**
  * Created by hcy on 2015/11/30.
- *
+ * <p>
  * HttpRequest
- *
  */
 public class HttpRequest {
 
@@ -59,11 +58,13 @@ public class HttpRequest {
 
         if (input != null && !input.equals("")) {
             String urlStr = MainActivity.SERVER_FILE
-                    + "/Json?method=" + MethodUtils.slMethod()
-                    + "&appVersion=" + MainActivity.APP_VERSION
-                    + "&deviceID=" + MainActivity.DEVICE_ID
-                    + "&lineName=" + input;
+//                    + "/Json?method=" + MethodUtils.slMethod()
+//                    + "&appVersion=" + MainActivity.APP_VERSION
+//                    + "&deviceID=" + MainActivity.DEVICE_ID
+//                    + "&lineName=" + input;
+                    + "/api18/bus/searchLine?name=" + input;
 
+            Log.i("hcy", "urlStr:" + urlStr);
             request = new Request.Builder().url(urlStr).build();
             mOkHttpClient.newCall(request).enqueue(new Callback() {
                 @Override
@@ -89,11 +90,16 @@ public class HttpRequest {
     public void getLineDirectionData(String input, final ICallBack callBack) {
 
         if (input != null && !input.equals("")) {
-            String urlStr = MainActivity.SERVER_FILE
-                    + "/Json?method=" + MethodUtils.ldMethod()
-                    + "&appVersion=" + MainActivity.APP_VERSION
-                    + "&deviceID=" + MainActivity.DEVICE_ID
-                    + "&Guid=" + input;
+            String urlStr = MainActivity.SERVER_FILE +
+//                    + "/Json?method=" + MethodUtils.ldMethod()
+//                    + "&appVersion=" + MainActivity.APP_VERSION
+//                    + "&deviceID=" + MainActivity.DEVICE_ID
+//                    + "&Guid=" + input;
+                    "/api18/bus/getLineInfo?" +
+                    "Guid=" + input +
+                    "&uid=0" +
+                    "&DeviceID=" + MainActivity.DEVICE_ID +
+                    "&sign=539f272911d2bb23117ea6211cce1bb5";
 
             request = new Request.Builder().url(urlStr).build();
             mOkHttpClient.newCall(request).enqueue(new Callback() {
@@ -121,11 +127,13 @@ public class HttpRequest {
     public void getFuzzyNameData(String input, final ICallBack callBack) {
 
         if (input != null && !input.equals("")) {
-            String urlStr = MainActivity.SERVER_FILE
-                    + "/Json?method=" + MethodUtils.ssMethod()
-                    + "&appVersion=" + MainActivity.APP_VERSION
-                    + "&deviceID=" + MainActivity.DEVICE_ID
-                    + "&standName=" + input;
+            String urlStr = MainActivity.SERVER_FILE +
+//                    + "/Json?method=" + MethodUtils.ssMethod()
+//                    + "&appVersion=" + MainActivity.APP_VERSION
+//                    + "&deviceID=" + MainActivity.DEVICE_ID
+//                    + "&standName=" + input;
+                    "/api18/bus/searchStation?" +
+                    "name=" + input;
 
             request = new Request.Builder().url(urlStr).build();
             mOkHttpClient.newCall(request).enqueue(new Callback() {
@@ -153,11 +161,17 @@ public class HttpRequest {
     public void getDetailedNameData(String input, final ICallBack callBack) {
 
         if (input != null && !input.equals("")) {
-            String urlStr = MainActivity.SERVER_FILE
-                    + "/Json?method=" + MethodUtils.gsMethod()
-                    + "&appVersion=" + MainActivity.APP_VERSION
-                    + "&deviceID=" + MainActivity.DEVICE_ID
-                    + "&NoteGuid=" + input;
+            String urlStr = MainActivity.SERVER_FILE +
+//                    + "/Json?method=" + MethodUtils.gsMethod()
+//                    + "&appVersion=" + MainActivity.APP_VERSION
+//                    + "&deviceID=" + MainActivity.DEVICE_ID
+//                    + "&NoteGuid=" + input;
+                    "/api18/bus/getStationInfo?" +
+                    "uid=0" +
+                    "&DeviceID=" + MainActivity.DEVICE_ID +
+                    "&sign=539f272911d2bb23117ea6211cce1bb5" +
+                    "&NoteGuid=" + input +
+                    "&lat=30.33&lng=120.61";
 
             request = new Request.Builder().url(urlStr).build();
             mOkHttpClient.newCall(request).enqueue(new Callback() {
@@ -183,24 +197,24 @@ public class HttpRequest {
      * 得到天气的信息
      **/
     public void getTempDate(final ICallBack callBack) {
-            String urlStr = MainActivity.SERVER_FILE_TEMP + "101190401";
-            request = new Request.Builder().url(urlStr).build();
-            mOkHttpClient.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Request request, IOException e) {
-                    callBack.onFailure("");
-                }
+        String urlStr = MainActivity.SERVER_FILE_TEMP + "101190401";
+        request = new Request.Builder().url(urlStr).build();
+        mOkHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callBack.onFailure("");
+            }
 
-                @Override
-                public void onResponse(final Response response) throws IOException {
-                    String htmlStr = response.body().string();
-                    if(StringUtils.isNullOrNullStr(htmlStr)){
-                        callBack.onFailure("");
-                    }else{
-                        callBack.onSuccess(htmlStr);
-                    }
+            @Override
+            public void onResponse(final Response response) throws IOException {
+                String htmlStr = response.body().string();
+                if (StringUtils.isNullOrNullStr(htmlStr)) {
+                    callBack.onFailure("");
+                } else {
+                    callBack.onSuccess(htmlStr);
                 }
-            });
+            }
+        });
     }
 
 
