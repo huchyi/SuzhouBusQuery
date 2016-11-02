@@ -83,6 +83,18 @@ public class LineDirectionActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        handler.postDelayed(runnable, 60 * 1000);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);//停止定时器
+    }
+
+    @Override
     protected void onDestroy() {
         handler.removeCallbacks(runnable);//停止定时器
         super.onDestroy();

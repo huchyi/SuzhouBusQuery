@@ -93,7 +93,7 @@ public class LineDirectionBaseAdapter extends BaseAdapter {
             }
         }
         holder.time.setText(InTimeStr);
-        String BusInfo = item.getStr("BusInfo");
+        String BusInfo = item.getStr("InTime");
 
         holder.car.setVisibility(StringUtils.isNullOrNullStr(BusInfo) ? View.INVISIBLE: View.VISIBLE);
         holder.carLine.setVisibility(StringUtils.isNullOrNullStr(BusInfo) ? View.INVISIBLE: View.VISIBLE);
