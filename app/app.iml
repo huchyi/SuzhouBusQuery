@@ -64,14 +64,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/xiaomi/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/xiaomi/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/xiaomi/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestXiaomi/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestXiaomi/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestXiaomi/assets" type="java-test-resource" />
@@ -80,6 +72,14 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestXiaomi/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestXiaomi/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestXiaomi/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testXiaomi/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" type="java-resource" />
