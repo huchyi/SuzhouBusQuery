@@ -1,0 +1,87 @@
+apply plugin: 'com.android.application'
+android {
+    compileSdkVersion 22
+    buildToolsVersion "23.0.2"
+    defaultConfig {
+        applicationId "com.hcy.suzhoubusquery"
+        minSdkVersion 11
+        targetSdkVersion 22
+        versionCode 2
+        versionName "1.1"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    signingConfigs {
+        //        debug {
+        //            // No debug config
+        //        }
+
+        release {
+            storeFile file("ibreathcare.keystory")
+            storePassword "ibreathcare"
+            keyAlias "Android"
+            keyPassword "ibreathcare"
+        }
+    }
+
+    buildTypes {
+        //        debug {
+        //
+        //            minifyEnabled false
+        //            zipAlignEnabled false
+        //            shrinkResources false
+        //            signingConfig signingConfigs.debug
+        //        }
+
+        release {
+
+            minifyEnabled true
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        def fileName = "suzhoubus_${defaultConfig.versionName}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+    }
+
+    //   ./gradlew assembleRelease   命令行输入即可打release包
+    //   ./gradlew assemblexiaomiRelease   命令行输入即可打xiaomi的release包
+    productFlavors {
+        xiaomi {}
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.1.0'
+    compile 'com.squareup.okhttp:okhttp:2.4.0+'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'cn.pedant.sweetalert:library:1.3'
+    compile files('libs/java-json.jar')
+    compile project(':dragsortlistview')
+}
